@@ -113,4 +113,17 @@ This library is built with customization in mind and contains minimal default st
  - Improve documentation
  - Improve Test Suite
 
+<br/>
+
+---
+
+<br/>
+
+<a href="https://www.buymeacoffee.com/tristan10" target="_blank">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://firebasestorage.googleapis.com/v0/b/attebyte-8542f.appspot.com/o/react-tree-select%2Fbmc-logo-light.svg?alt=media&token=03a8ffd4-3e98-4c8e-9e7a-b8c200c92ed6">
+    <img style="color: white;" src="https://firebasestorage.googleapis.com/v0/b/attebyte-8542f.appspot.com/o/react-tree-select%2Fbmc-logo.svg?alt=media&token=357749a8-a191-46de-88f4-b7783517b806" alt="Buy Me A Coffee Logo" title="Buy Me A Coffee" height="40" />
+  </picture>
+</a>
+
 This is my first open source project and feedback is always appreciated. [Twitter](https://twitter.com/tristanattebery)
