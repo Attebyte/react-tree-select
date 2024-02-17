@@ -1,17 +1,58 @@
 import React, { useState } from 'react';
 import { FaFile, FaFolder, FaFolderOpen } from 'react-icons/fa6';
 import { NodeCheckProps } from '../lib/components/NodeCheck';
-import { TreeSelect } from '../lib/main';
+import TreeSelect  from '../lib/main';
 import './App.css';
-import ExampleData from './ExampleData.json';
+// import ExampleData from './ExampleData.json';
 
 interface ExampleNode {
   label: string;
   value: number;
-  included?: boolean;
-  disabled?: boolean;
+  included?: boolean | null;
   children?: ExampleNode[];
 }
+
+const ExampleData: ExampleNode[] = [
+  {
+    label: 'Root 1',
+    value: 1,
+    children: [
+      {
+        label: 'Child 1',
+        value: 2,
+        children: [
+          {
+            label: 'Grandchild 1',
+            value: 3,
+          },
+          {
+            label: 'Grandchild 2',
+            value: 4,
+          }
+        ]
+      },
+      {
+        label: 'Child 2',
+        value: 5,
+      }
+    ]
+  },
+  {
+    label: 'Root 2',
+    value: 6,
+    children: [
+      {
+        label: 'Child 3',
+        value: 7,
+      },
+      {
+        label: 'Child 4',
+        value: 8,
+      }
+    ]
+  }
+
+];
 
 const CustomFolderIcon = (props: NodeCheckProps<ExampleNode>) => {
   const hasChildren = Array.isArray(props.standardComponentProps.node[props.standardComponentProps.childrenProperty]) &&
@@ -42,25 +83,6 @@ const App = () => {
 
   return (
     <div className='p-3'>
-      <div className='flex gap-6'>
-        <label>
-          <input type='checkbox' onChange={(e) => setChainedSelect(e.target.checked)} checked={chainedSelect} />
-          <span className='ps-2'>Chained Select</span>
-        </label>
-
-        <label>
-          <input type='checkbox' onChange={(e) => setDisabled(e.target.checked)} checked={disabled} />
-          <span className='ps-2'>Disabled</span>
-        </label>
-
-        <label>
-          <input type='checkbox' onChange={(e) => setExpandDisabled(e.target.checked)} checked={expandDisabled} />
-          <span className='ps-2'>Expand Disabled</span>
-        </label>
-      </div>
-
-
-      <div className='border-t border-gray-600 h-0 my-3' />
 
       <TreeSelect
         data={data}
@@ -71,7 +93,6 @@ const App = () => {
         childrenProperty={'children'}
         labelProperty={'label'}
         valueProperty={'included'}
-        disabledProperty={'disabled'}
 
         // CustomCheckComponent={CustomFolderIcon}
         // CustomExpandIconComponent={() => null}

@@ -12,7 +12,7 @@ export interface StandardComponentProps<T> {
   expanded?: boolean;
   uniqueIDProperty: keyof T;
   labelProperty: keyof T;
-  valueProperty: keyof T;
+  valueProperty?: keyof T;
   childrenProperty: keyof T;
   disabledProperty?: keyof T;
   parentIDProperty?: keyof T;
@@ -40,7 +40,7 @@ export interface TreeSelectProps<T> extends Omit<React.HTMLProps<HTMLDivElement>
   CustomLabelComponent?: React.ComponentType<NodeLabelProps<T>>;
   CustomExpandIconComponent?: React.ComponentType<ExpandIconProps<T>>;
 
-  onChange: (data: T[]) => void;
+  onChange?: (data: T[]) => void;
 }
 
 export const TreeSelect = <T,>(props: TreeSelectProps<T>) => {
@@ -87,7 +87,7 @@ export const TreeSelect = <T,>(props: TreeSelectProps<T>) => {
   }, [props.data, props.childrenProperty, props.uniqueIDProperty, parentIDProperty]);
 
   const handleNodeChange = (node: T, value: boolean | null) => {
-    if (!mutableTree.current)
+    if (!mutableTree.current || !props.onChange || !props.valueProperty)
       return;
 
     let updNode = TreeUtility.getNode(mutableTree.current, props.childrenProperty, props.uniqueIDProperty, node[props.uniqueIDProperty]);
