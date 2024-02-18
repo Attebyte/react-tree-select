@@ -19,7 +19,8 @@ export interface StandardComponentProps<T> {
 }
 
 export interface TreeSelectProps<T> extends Omit<React.HTMLProps<HTMLDivElement>, "data" | "onChange">, Omit<StandardComponentProps<T>, "node" | "expanded"> {
-  data: T[];
+  data?: T[];
+  defaultData?: T[];
 
   disabled?: boolean;
   expandDisabledNodes?: boolean;
@@ -46,6 +47,7 @@ export interface TreeSelectProps<T> extends Omit<React.HTMLProps<HTMLDivElement>
 export const TreeSelect = <T,>(props: TreeSelectProps<T>) => {
   const {
     data,
+    defaultData,
     uniqueIDProperty,
     labelProperty,
     valueProperty,
@@ -72,8 +74,14 @@ export const TreeSelect = <T,>(props: TreeSelectProps<T>) => {
     ...rest
   } = props;
 
-  const mutableTree = useRef<any[] | null>(null);
-  const [renderTree, setRenderTree] = useState<any[] | null>(null);
+  let defaultTree: T[] | null = null;
+  if (props.defaultData && !props.data) {
+    defaultTree = structuredClone(props.defaultData);
+    TreeUtility.initializeTree(defaultTree as ExtendedNode<T>[], parentIDProperty, props.childrenProperty, props.uniqueIDProperty);
+  }
+
+  const mutableTree = useRef<any[] | null>(defaultTree);
+  const [renderTree, setRenderTree] = useState<any[] | null>(defaultTree);
 
   useEffect(() => {
     if (!props.data)

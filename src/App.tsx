@@ -85,7 +85,7 @@ const App = () => {
     <div className='p-3'>
 
       <TreeSelect
-        data={data}
+        defaultData={data}
         chainedSelect={chainedSelect}
         disabled={disabled}
         expandDisabledNodes={expandDisabled}
