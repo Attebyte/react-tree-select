@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
 import { FaFile, FaFolder, FaFolderOpen } from 'react-icons/fa6';
 import { NodeCheckProps } from '../lib/components/NodeCheck';
-import TreeSelect  from '../lib/main';
+import { BrowserRouter, HashRouter, Route, Routes } from 'react-router-dom';
 import './App.css';
+import Layout from './layout/Layout';
+import Installation from './pages/installation/Installation';
+import GettingStarted from './pages/gettingstarted/GettingsStarted';
 // import ExampleData from './ExampleData.json';
 
 interface ExampleNode {
@@ -82,28 +85,11 @@ const App = () => {
   }
 
   return (
-    <div className='p-3'>
-
-      <TreeSelect
-        defaultData={data}
-        chainedSelect={chainedSelect}
-        disabled={disabled}
-        expandDisabledNodes={expandDisabled}
-        uniqueIDProperty={'value'}
-        childrenProperty={'children'}
-        labelProperty={'label'}
-        valueProperty={'included'}
-
-        // CustomCheckComponent={CustomFolderIcon}
-        // CustomExpandIconComponent={() => null}
-
-        // className='bg-sky-950 text-neutral-200 p-6'
-        // nodeClassName='flex flex-wrap basis-full'
-        // labelClassName='font-bold font-mono'
-
-        onChange={handleChange}
-      />
-    </div>
+    <Layout>
+      <Installation />
+      <br/><br/>
+      <GettingStarted />
+    </Layout>
   )
 }
 
