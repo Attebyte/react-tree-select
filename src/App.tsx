@@ -6,6 +6,7 @@ import './App.css';
 import Layout from './layout/Layout';
 import Installation from './pages/installation/Installation';
 import GettingStarted from './pages/gettingstarted/GettingsStarted';
+import API from './pages/api/API';
 // import ExampleData from './ExampleData.json';
 
 interface ExampleNode {
@@ -86,9 +87,11 @@ const App = () => {
 
   return (
     <Layout>
-      <Installation />
-      <br/><br/>
-      <GettingStarted />
+      <div className='flex flex-col gap-10 overflow-hidden'>
+        <Installation />
+        <GettingStarted />
+        <API />
+      </div>
     </Layout>
   )
 }

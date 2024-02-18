@@ -31,6 +31,7 @@ const NodeCheck = <T,>(props: NodeCheckProps<T>) => {
         myRef,
         standardComponentProps,
         checked,
+        expanded,
         ...rest
     } = props;
 

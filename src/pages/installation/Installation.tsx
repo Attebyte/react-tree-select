@@ -1,12 +1,10 @@
 import React from 'react';
 
-interface Props {
+interface Props extends React.HTMLProps<HTMLDivElement> { }
 
-}
-
-const Installation = (props: React.PropsWithChildren<Props>) => {
+const Installation = (props: Props) => {
   return (
-    <div className="mb-4">
+    <div {...props}>
       <a href='#installation' hidden>Installation</a>
       <h2 className='text-2xl font-bold mb-2 underline'>Installation</h2>
       <p>

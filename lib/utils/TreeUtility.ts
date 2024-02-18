@@ -14,12 +14,12 @@ export class TreeUtility {
     });
   }
 
-  static omitParentID<T extends { parentID?: any }>(tree: T[], childrenProperty: keyof Omit<T, 'parentID'>): Omit<T, 'parentID'>[] {
+  static omitParentID<T extends { _parentID?: any }>(tree: T[], childrenProperty: keyof Omit<T, '_parentID'>): Omit<T, '_parentID'>[] {
     return tree.map(node => {
-      const { parentID, ...rest } = node; // Destructure to omit parentID
+      const { _parentID, ...rest } = node; // Destructure to omit parentID
       if (node[childrenProperty] && Array.isArray(node[childrenProperty])) {
         // If there are children, recursively omit their parentID too
-        rest[childrenProperty] = this.omitParentID(node[childrenProperty] as T[], childrenProperty as keyof Omit<T, 'parentID'>) as T[Exclude<keyof T, "parentID">]; // Explicit casting
+        rest[childrenProperty] = this.omitParentID(node[childrenProperty] as T[], childrenProperty as keyof Omit<T, '_parentID'>) as T[Exclude<keyof T, "_parentID">]; // Explicit casting
       }
       return rest;
     });

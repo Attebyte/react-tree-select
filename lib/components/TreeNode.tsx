@@ -80,7 +80,7 @@ const TreeNode = <T,>(props: TreeNodeProps<T>) => {
     if ((props.expandDisabledNodes || !isDisabled) && node[childrenProperty] && Array.isArray(node[childrenProperty]) && (node[childrenProperty] as T[]).length > 0) {
       setExpanded(!expanded);
     } else if (!isDisabled) {
-      onChange(node, !node[valueProperty]);
+      onChange(node, !node[valueProperty!]);
     }
   }
 
@@ -96,7 +96,7 @@ const TreeNode = <T,>(props: TreeNodeProps<T>) => {
         style={props.inputStyle}
         disabled={isDisabled}
         expanded={expanded}
-        checked={node[valueProperty] as boolean | null | undefined}
+        checked={node[valueProperty!] as boolean | null | undefined}
 
         onChange={handleChange}
       />
