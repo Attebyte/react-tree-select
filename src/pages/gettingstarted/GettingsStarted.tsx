@@ -44,7 +44,7 @@ const GettingStarted = (props: Props) => {
 
   return (
     <div {...props}>
-      <a href='#getting-started' hidden>Getting Started</a>
+      <a href='#gettingstarted' hidden>Getting Started</a>
       <h2 className='text-2xl font-bold mb-2 underline'>Getting Started</h2>
       <p>
         Import the default export from the package and use it in your component.

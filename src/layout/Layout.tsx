@@ -21,11 +21,11 @@ const Layout = (props: React.PropsWithChildren<Props>) => {
               <FaBars onClick={() => setExpanded(!expanded)} className="h-7 w-7 lg:hidden text-slate-400 transition-all hover:cursor-pointer hover:text-white" />
             </div>
             <hr />
-            <SideItem className={`${expanded ? 'p-2' : 'h-0 lg:h-auto lg:p-2'} lg:flex overflow-hidden lg:overflow-visible`} href='#installation'>Installation</SideItem>
-            <SideItem className={`${expanded ? 'p-2' : 'h-0 lg:h-auto lg:p-2'} lg:flex overflow-hidden lg:overflow-visible`} href='#gettingstarted'>Getting Started</SideItem>
-            <SideItem className={`${expanded ? 'p-2' : 'h-0 lg:h-auto lg:p-2'} lg:flex overflow-hidden lg:overflow-visible`} href='#api'>Props API</SideItem>
-            <SideItem className={`${expanded ? 'p-2' : 'h-0 lg:h-auto lg:p-2'} lg:flex overflow-hidden lg:overflow-visible`} href='#customization'>Customization</SideItem>
-            <SideItem className={`${expanded ? 'p-2' : 'h-0 lg:h-auto lg:p-2'} lg:flex overflow-hidden lg:overflow-visible`} href='#examples'>Examples</SideItem>
+            <SideItem active={window.location.hash === '#installation'} className={`${expanded ? 'p-2' : 'h-0 lg:h-auto lg:p-2'} lg:flex overflow-hidden lg:overflow-visible`} href='#installation'>Installation</SideItem>
+            <SideItem active={window.location.hash === '#gettingstarted'} className={`${expanded ? 'p-2' : 'h-0 lg:h-auto lg:p-2'} lg:flex overflow-hidden lg:overflow-visible`} href='#gettingstarted'>Getting Started</SideItem>
+            <SideItem active={window.location.hash === '#api'} className={`${expanded ? 'p-2' : 'h-0 lg:h-auto lg:p-2'} lg:flex overflow-hidden lg:overflow-visible`} href='#api'>Props API</SideItem>
+            {/* <SideItem className={`${expanded ? 'p-2' : 'h-0 lg:h-auto lg:p-2'} lg:flex overflow-hidden lg:overflow-visible`} href='#customization'>Customization</SideItem> */}
+            <SideItem active={window.location.hash === '#examples'} className={`${expanded ? 'p-2' : 'h-0 lg:h-auto lg:p-2'} lg:flex overflow-hidden lg:overflow-visible`} href='#examples'>Examples</SideItem>
             <SideItem className={`${expanded ? 'p-2' : 'h-0 lg:h-auto lg:p-2'} lg:flex overflow-hidden lg:overflow-visible`} target='_blank' href='https://github.com/Attebyte/react-tree-select' >
               <FaGithub className="h-5 w-5 me-2" />
               GitHub
@@ -45,7 +45,7 @@ const Layout = (props: React.PropsWithChildren<Props>) => {
               <span className="text-xs hidden lg:inline-block text-slate-500">Copyright © Attebyte LLC {new Date().getFullYear()}</span>
             </div>
           </div>
-          <div id='scroll' className="basis-full p-4 h-auto overflow-x-hidden overflow-y-scroll">
+          <div id='scroll' className="basis-full p-4 h-auto relative overflow-x-hidden overflow-y-scroll">
             {props.children}
           </div>
         </div>

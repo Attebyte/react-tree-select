@@ -17,7 +17,7 @@ const iconVariants = cva(`inline-block text-[.8em] ms-3 transition-transform dur
     }
 });
 
-export interface ExpandIconProps<T> extends React.HTMLAttributes<HTMLInputElement>, VariantProps<typeof iconVariants>, Props<T> { }
+export interface ExpandIconProps<T> extends React.HTMLAttributes<HTMLSpanElement>, VariantProps<typeof iconVariants>, Props<T> { }
 
 const ExpandIcon = <T,>(props: ExpandIconProps<T>) => {
     const {
