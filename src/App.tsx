@@ -8,6 +8,7 @@ import Installation from './pages/installation/Installation';
 import GettingStarted from './pages/gettingstarted/GettingsStarted';
 import API from './pages/api/API';
 import Examples from './pages/examples/Examples';
+import About from './pages/about/About';
 
 // const CustomFolderIcon = (props: NodeCheckProps<ExampleNode>) => {
 //   const hasChildren = Array.isArray(props.standardComponentProps.node[props.standardComponentProps.childrenProperty]) &&
@@ -38,7 +39,7 @@ const App = () => {
     if (scrollElement) {
       scrollElement.addEventListener('scroll', () => {
         if (installationAnchor && gettingStartedAnchor && apiAnchor && examplesAnchor) {
-          console.log(gettingStartedAnchor.offsetTop, gettingStartedAnchor.scrollTop, gettingStartedAnchor.clientTop);
+          console.log(gettingStartedAnchor.scrollHeight);
         }
       });
     }
@@ -49,6 +50,7 @@ const App = () => {
   return (
     <Layout>
       <div className='flex flex-col gap-10 overflow-hidden'>
+        <About />
         <Installation />
         <GettingStarted />
         <API />

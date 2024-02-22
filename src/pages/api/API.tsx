@@ -144,35 +144,35 @@ const TreeSelectProperties: Property[] = [
     },
     {
         name: 'uniqueIDProperty',
-        type: 'string | number | symbol',
+        type: 'keyof T',
         default: '',
         required: 'yes',
         description: 'Property that uniquely identifies node.'
     },
     {
         name: 'labelProperty',
-        type: 'string | number | symbol',
+        type: 'keyof T',
         default: '',
         required: 'yes',
         description: 'Property that contains the node label.'
     },
     {
         name: 'childrenProperty',
-        type: 'string | number | symbol',
+        type: 'keyof T',
         default: '',
         required: 'yes',
         description: 'Property that contains children nodes.'
     },
     {
         name: 'valueProperty',
-        type: 'string | number | symbol',
+        type: 'keyof T',
         default: '',
         required: 'probably',
         description: 'Property used to indicate if node is selected. Only optional if using component for display only.'
     },
     {
         name: 'disabledProperty',
-        type: 'string | number | symbol',
+        type: 'keyof T',
         default: '',
         required: 'no',
         description: 'Property used to indicate if node is disabled.'
@@ -305,27 +305,27 @@ const StandardProperties: Property[] = [
     },
     {
         name: 'uniqueIDProperty',
-        type: 'string | number | symbol',
+        type: 'keyof T',
         description: 'Property of the nodes unique identifier.'
     },
     {
         name: 'labelProperty',
-        type: 'string | number | symbol',
+        type: 'keyof T',
         description: 'Property of the nodes label.'
     },
     {
         name: 'valueProperty',
-        type: 'string | number | symbol',
+        type: 'keyof T',
         description: 'Property of the nodes value.'
     },
     {
         name: 'childrenProperty',
-        type: 'string | number | symbol',
+        type: 'keyof T',
         description: 'Property of the nodes children.'
     },
     {
         name: 'disabledProperty',
-        type: 'string | number | symbol',
+        type: 'keyof T',
         description: 'Property indicating if the node is disabled.'
     }
 ];

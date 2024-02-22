@@ -45,7 +45,7 @@ const Layout = (props: React.PropsWithChildren<Props>) => {
               <span className="text-xs hidden lg:inline-block text-slate-500">Copyright © Attebyte LLC {new Date().getFullYear()}</span>
             </div>
           </div>
-          <div id='scroll' className="basis-full p-4 h-auto relative overflow-x-hidden overflow-y-scroll">
+          <div id='scroll' className="basis-full p-4 relative overflow-x-hidden overflow-y-scroll">
             {props.children}
           </div>
         </div>
