@@ -63,7 +63,7 @@ const CustomNodeComponent = (props: TreeNodeProps<typeof ExampleData[number]>) =
 const CustomNode = () => {
   return (
     <div className='relative'>
-      <SourceLinkButton href='' />
+      <SourceLinkButton href='https://github.com/Attebyte/react-tree-select/blob/main/src/pages/examples/CustomNode.tsx' />
       <TreeSelect
         defaultData={ExampleData}
         uniqueIDProperty={'value'}

@@ -21,7 +21,7 @@ const CustomFolderIcon = (props: NodeCheckProps<ExampleNode>) => {
 const CustomCheck = () => {
   return (
     <div className='relative'>
-      <SourceLinkButton href='' />
+      <SourceLinkButton href='https://github.com/Attebyte/react-tree-select/blob/main/src/pages/examples/CustomCheck.tsx' />
       <TreeSelect
         defaultData={ExampleData}
         uniqueIDProperty={'value'}

@@ -6,7 +6,7 @@ import ExampleData from "../../ExampleData.json";
 const BasicCustomization = () => {
   return (
     <div className='relative'>
-      <SourceLinkButton href='' />
+      <SourceLinkButton href='https://github.com/Attebyte/react-tree-select/blob/main/src/pages/examples/BasicCustomization.tsx' />
       <TreeSelect
         defaultData={ExampleData as ExampleNode[]}
         uniqueIDProperty={'value'}

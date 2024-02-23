@@ -24,7 +24,7 @@ const CustomIconComponent = (props: ExpandIconProps<ExampleNode>) => {
 const CustomIcon = () => {
   return (
     <div className='relative'>
-      <SourceLinkButton href='' />
+      <SourceLinkButton href='https://github.com/Attebyte/react-tree-select/blob/main/src/pages/examples/CustomIcon.tsx' />
       <TreeSelect
         defaultData={ExampleData as ExampleNode[]}
         uniqueIDProperty={'value'}
