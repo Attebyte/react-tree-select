@@ -1,10 +1,11 @@
+import { useState } from "react";
 import { FaBars, FaGithub, FaXTwitter } from "react-icons/fa6";
 import SideItem from "./SideItem";
-import { useState } from "react";
 
 
 interface Props {
-
+  currentHash: string;
+  onLinkClick: (e: React.MouseEvent<HTMLAnchorElement>) => void;
 }
 
 const Layout = (props: React.PropsWithChildren<Props>) => {
@@ -21,16 +22,44 @@ const Layout = (props: React.PropsWithChildren<Props>) => {
               <FaBars onClick={() => setExpanded(!expanded)} className="h-7 w-7 lg:hidden text-slate-400 transition-all hover:cursor-pointer hover:text-white" />
             </div>
             <hr />
-            <SideItem active={window.location.hash === '#installation'} className={`${expanded ? 'p-2' : 'h-0 lg:h-auto lg:p-2'} lg:flex overflow-hidden lg:overflow-visible`} href='#installation'>Installation</SideItem>
-            <SideItem active={window.location.hash === '#gettingstarted'} className={`${expanded ? 'p-2' : 'h-0 lg:h-auto lg:p-2'} lg:flex overflow-hidden lg:overflow-visible`} href='#gettingstarted'>Getting Started</SideItem>
-            <SideItem active={window.location.hash === '#api'} className={`${expanded ? 'p-2' : 'h-0 lg:h-auto lg:p-2'} lg:flex overflow-hidden lg:overflow-visible`} href='#api'>Props API</SideItem>
+            <SideItem
+              active={props.currentHash === 'installation'}
+              className={`${expanded ? 'p-2' : 'h-0 lg:h-auto lg:p-2'} lg:flex overflow-hidden lg:overflow-visible`}
+              href='#installation'
+              onClick={props.onLinkClick}
+            >
+              Installation
+            </SideItem>
+            <SideItem
+              active={props.currentHash === 'getting-started'}
+              className={`${expanded ? 'p-2' : 'h-0 lg:h-auto lg:p-2'} lg:flex overflow-hidden lg:overflow-visible`}
+              href='#getting-started'
+              onClick={props.onLinkClick}
+            >
+              Getting Started
+            </SideItem>
+            <SideItem
+              active={props.currentHash === 'api'}
+              className={`${expanded ? 'p-2' : 'h-0 lg:h-auto lg:p-2'} lg:flex overflow-hidden lg:overflow-visible`}
+              href='#api'
+              onClick={props.onLinkClick}
+            >
+              Props API
+            </SideItem>
             {/* <SideItem className={`${expanded ? 'p-2' : 'h-0 lg:h-auto lg:p-2'} lg:flex overflow-hidden lg:overflow-visible`} href='#customization'>Customization</SideItem> */}
-            <SideItem active={window.location.hash === '#examples'} className={`${expanded ? 'p-2' : 'h-0 lg:h-auto lg:p-2'} lg:flex overflow-hidden lg:overflow-visible`} href='#examples'>Examples</SideItem>
+            <SideItem
+              active={props.currentHash === 'examples'}
+              className={`${expanded ? 'p-2' : 'h-0 lg:h-auto lg:p-2'} lg:flex overflow-hidden lg:overflow-visible`}
+              href='#examples'
+              onClick={props.onLinkClick}
+            >
+              Examples
+            </SideItem>
             <SideItem className={`${expanded ? 'p-2' : 'h-0 lg:h-auto lg:p-2'} lg:flex overflow-hidden lg:overflow-visible`} target='_blank' href='https://github.com/Attebyte/react-tree-select' >
               <FaGithub className="h-5 w-5 me-2" />
               GitHub
             </SideItem>
-            <SideItem  className={`${expanded ? 'p-2' : 'h-0 lg:h-auto lg:p-2'} lg:flex overflow-hidden lg:overflow-visible`} target='_blank' href='https://twitter.com/attebyte' >
+            <SideItem className={`${expanded ? 'p-2' : 'h-0 lg:h-auto lg:p-2'} lg:flex overflow-hidden lg:overflow-visible`} target='_blank' href='https://twitter.com/attebyte' >
               <FaXTwitter className="h-5 w-5 me-2" />
               Twitter
             </SideItem>

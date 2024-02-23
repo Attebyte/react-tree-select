@@ -1,55 +1,83 @@
-import React, { useEffect, useState } from 'react';
-import { FaFile, FaFolder, FaFolderOpen } from 'react-icons/fa6';
-import { NodeCheckProps } from '../lib/components/NodeCheck';
-import { BrowserRouter, HashRouter, Route, Routes } from 'react-router-dom';
+import React, { useEffect, useRef, useState } from 'react';
 import './App.css';
 import Layout from './layout/Layout';
-import Installation from './pages/installation/Installation';
-import GettingStarted from './pages/gettingstarted/GettingsStarted';
+import About from './pages/about/About';
 import API from './pages/api/API';
 import Examples from './pages/examples/Examples';
-import About from './pages/about/About';
-
-// const CustomFolderIcon = (props: NodeCheckProps<ExampleNode>) => {
-//   const hasChildren = Array.isArray(props.standardComponentProps.node[props.standardComponentProps.childrenProperty]) &&
-//     (props.standardComponentProps.node[props.standardComponentProps.childrenProperty] as ExampleNode[])?.length > 0;
-
-//   if (hasChildren && props.expanded)
-//     return <FaFolderOpen className={`h-5 w-5 ${props.disabled ? 'opacity-60' : ''} ${props.checked === null ? 'text-emerald-600' : props.checked ? 'text-cyan-300' : ''}`} />
-
-//   if (hasChildren)
-//     return <FaFolder className={`h-5 w-5 ${props.disabled ? 'opacity-60' : ''} ${props.checked === null ? 'text-emerald-600' : props.checked ? 'text-cyan-300' : ''}`} />
-
-//   return <FaFile className={`h-5 w-5 ${props.disabled ? 'opacity-60' : ''} ${props.checked ? 'text-cyan-300' : ''}`} />
-// }
+import GettingStarted from './pages/gettingstarted/GettingsStarted';
+import Installation from './pages/installation/Installation';
 
 const App = () => {
+  const [currentHash, setCurrentHash] = useState('');
+
+  const installationRef = useRef<HTMLElement | null>(null);
+  const gettingStartedRef = useRef<HTMLElement | null>(null);
+  const apiRef = useRef<HTMLElement | null>(null);
+  const examplesRef = useRef<HTMLElement | null>(null);
+
+
+  const setHash = (hash: string) => {
+    const url = new URL(window.location.href);
+    url.hash = hash;
+    window.history.pushState({}, '', url);
+    setCurrentHash(hash);
+  }
 
   useEffect(() => {
-    const installationAnchor = Array.from(document.getElementsByTagName('a')).find(a => a.hash === '#installation');
-    const gettingStartedAnchor = Array.from(document.getElementsByTagName('a')).find(a => a.hash === '#gettingstarted');
-    const apiAnchor = Array.from(document.getElementsByTagName('a')).find(a => a.hash === '#api');
-    const examplesAnchor = Array.from(document.getElementsByTagName('a')).find(a => a.hash === '#examples');
+    installationRef.current = document.getElementById('installation');
+    gettingStartedRef.current = document.getElementById('getting-started');
+    apiRef.current = document.getElementById('api');
+    examplesRef.current = document.getElementById('examples');
 
-    if (window.location.hash === '') {
-      window.location.hash = 'installation';
+    if (window.location.hash) {
+      setCurrentHash(window.location.hash.replace('#', ''));
+      const element = document.getElementById(window.location.hash.replace('#', ''));
+      if (element) {
+        element.scrollIntoView();
+      }
     }
 
     const scrollElement = document.getElementById('scroll');
     if (scrollElement) {
       scrollElement.addEventListener('scroll', () => {
-        if (installationAnchor && gettingStartedAnchor && apiAnchor && examplesAnchor) {
-          console.log(gettingStartedAnchor.scrollHeight);
+        if (installationRef.current && gettingStartedRef.current && apiRef.current && examplesRef.current) {
+          // If scrollElement.scrollTop is greater than the top of the element
+          // set the hash to the id of the element
+          // Do not set the hash if the element is already the hash
+          if (scrollElement.scrollTop < installationRef.current.offsetTop && window.location.hash !== '#installation') {
+            setHash('installation');
+          }
+          if (scrollElement.scrollTop > installationRef.current.offsetTop && scrollElement.scrollTop < gettingStartedRef.current.offsetTop && window.location.hash !== '#installation') {
+            setHash('installation');
+          }
+          if (scrollElement.scrollTop > gettingStartedRef.current.offsetTop && scrollElement.scrollTop < apiRef.current.offsetTop && window.location.hash !== '#getting-started') {
+            setHash('getting-started');
+          }
+          if (scrollElement.scrollTop > apiRef.current.offsetTop && scrollElement.scrollTop < examplesRef.current.offsetTop && window.location.hash !== '#api') {
+            setHash('api');
+          }
+          if (scrollElement.scrollTop > examplesRef.current.offsetTop && window.location.hash !== '#examples') {
+            setHash('examples');
+          }
+
         }
       });
     }
   }, []);
 
+  const handleLinkClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    setHash(e.currentTarget.hash.replace('#', ''));
 
+    // manually scroll to the element
+    const element = document.getElementById(e.currentTarget.hash.replace('#', ''));
+    if (element) {
+      element.scrollIntoView();
+    }
+  }
 
   return (
-    <Layout>
-      <div className='flex flex-col gap-10 overflow-hidden'>
+    <Layout onLinkClick={handleLinkClick} currentHash={currentHash}>
+      <div className='flex flex-col gap-10 overflow-hidden mb-32'>
         <About />
         <Installation />
         <GettingStarted />

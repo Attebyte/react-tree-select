@@ -14,8 +14,7 @@ interface Property {
 const API = (props: Props) => {
     return (
         <div {...props}>
-            <a href='#api' hidden>API</a>
-            <h2 className='text-2xl font-bold mb-2 underline'>API</h2>
+            <h2 id='api' className='text-2xl font-bold mb-2 underline'>API</h2>
             <h4 className='font-bold'>TreeSelect <span className='text-sm text-neutral-400'>extends HTMLDivElement</span></h4>
             <div className='flex flex-col'>
                 <div className='flex flex-row rounded-t-lg p-2 font-bold bg-neutral-800'>

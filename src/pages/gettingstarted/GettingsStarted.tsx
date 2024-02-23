@@ -2,15 +2,9 @@ import React, { useState } from 'react';
 import TreeSelect from '../../../lib/main';
 import ExampleData from '../../ExampleData.json';
 import Code from '../../shared/Code';
+import ExampleNode from '../../models/ExampleNode';
 
 interface Props extends React.HTMLProps<HTMLDivElement> { }
-
-interface ExampleNode {
-  label: string;
-  value: number;
-  included?: boolean | null;
-  children?: ExampleNode[];
-}
 
 const AppCode = `import TreeSelect from '@attebyte/react-tree-select';
 import ExampleData from './ExampleData.json';
@@ -36,7 +30,7 @@ const App = () => {
 
 export default App;`;
 
-const ExampleDataCode = JSON.stringify(ExampleData, null, 2);
+export const ExampleDataCode = JSON.stringify(ExampleData, null, 2);
 
 const GettingStarted = (props: Props) => {
 
@@ -45,7 +39,7 @@ const GettingStarted = (props: Props) => {
   return (
     <div {...props}>
       <a href='#gettingstarted' hidden>Getting Started</a>
-      <h2 className='text-2xl font-bold mb-2 underline'>Getting Started</h2>
+      <h2 id='getting-started' className='text-2xl font-bold mb-2 underline'>Getting Started</h2>
       <p>
         Import the default export from the package and use it in your component.
       </p>

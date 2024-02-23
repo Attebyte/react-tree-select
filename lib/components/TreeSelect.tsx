@@ -141,6 +141,8 @@ export const TreeSelect = <T,>(props: TreeSelectProps<T>) => {
 
             className={props.nodeClassName}
             style={props.nodeStyle}
+            inputClassName={props.inputClassName}
+            inputStyle={props.inputStyle}
             labelClassName={props.labelClassName}
             labelStyle={props.labelStyle}
             iconClassName={props.iconClassName}
