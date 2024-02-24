@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
 import TreeSelect from '../../../lib/main';
 import ExampleData from '../../ExampleData.json';
-import Code from '../../shared/Code';
 import ExampleNode from '../../models/ExampleNode';
+import Code from '../../shared/Code';
+import Tip from '../../shared/Tip';
 
 interface Props extends React.HTMLProps<HTMLDivElement> { }
 
 const AppCode = `import TreeSelect from '@attebyte/react-tree-select';
+import '@attebyte/react-tree-select/dist/style.css';
 import ExampleData from './ExampleData.json';
 
 interface ExampleNode {
@@ -54,15 +56,18 @@ const GettingStarted = (props: Props) => {
         `}>ExampleData.json</div>
       </div>
       {selectedTab === 'app' &&
-        <Code className='bg-neutral-800 p-3 rounded-b-lg mb-6'>
+        <Code>
           {AppCode}
         </Code>
       }
       {selectedTab === 'data' &&
-        <Code className='bg-neutral-800 p-3 rounded-b-lg mb-6'>
+        <Code>
           {ExampleDataCode}
         </Code>
       }
+      <Tip>
+        Note the <code>import '@attebyte/react-tree-select/dist/style.css';</code> line. This is required to include the default styles for the component.
+      </Tip>
       <h4 className='mb-2'>Result</h4>
       <TreeSelect
         defaultData={ExampleData as ExampleNode[]}

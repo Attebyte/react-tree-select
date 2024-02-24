@@ -1,12 +1,14 @@
 # React Tree Select &nbsp;&nbsp;<img src="https://firebasestorage.googleapis.com/v0/b/attebyte-8542f.appspot.com/o/react-tree-select%2Freact.svg?alt=media&token=a2cf555d-d091-4b45-af56-6fc97062c66d" alt="React Icon" width="30" height="30" /> &nbsp; <img src="https://firebasestorage.googleapis.com/v0/b/attebyte-8542f.appspot.com/o/react-tree-select%2Ftailwind.svg?alt=media&token=7655c1f4-9525-4c53-acfa-07b4d95edb22" alt="React Icon" width="30" height="30" /> 
-A simple, highly customizable tree component. View full documentation.
+A simple, highly customizable tree component. <br/>
+[View Full Documentation](https://rts.attebyte.io)
 
 ## Installation
 Install using the package manager of your choice.
 
 ```
 npm i @attebyte/react-tree-select
-
+```
+```
 yarn add @attebyte/react-tree-select
 ```
 
@@ -15,32 +17,28 @@ yarn add @attebyte/react-tree-select
 Simply pass your tree shaped data to TreeSelect along with the required properties.
 
 ```
-import { useState } from 'react';
 import TreeSelect from '@attebyte/react-tree-select';
+import '@attebyte/react-tree-select/dist/style.css';
 
-interface ExampleNode {
-  label: string;
-  value: number;
-  included?: boolean | null;
-  children?: ExampleNode[];
-}
-
-const App = () => {
-
-  const [data, setData] = useState<ExampleNode[]>(ExampleData as ExampleNode[]);
-
+function App() {
   return (
+    <>
       <TreeSelect
-        data={data}
-        uniqueIDProperty={'value'}
-        childrenProperty={'children'}
+        defaultData={ExampleData}
         labelProperty={'label'}
         valueProperty={'included'}
-        onChange={setData}
-      />
+        childrenProperty={'children'}
+        uniqueIDProperty={'value'}
+
+        />
+    </>
   )
 }
 
+export default App
+```
+
+```
 const ExampleData: ExampleNode[] = [
   {
     label: 'Root 1',
@@ -81,23 +79,22 @@ const ExampleData: ExampleNode[] = [
     ]
   }
 ];
-
-export default App
 ```
 
 <img src="https://firebasestorage.googleapis.com/v0/b/attebyte-8542f.appspot.com/o/react-tree-select%2Ftree-select-example.gif?alt=media&token=0fb3fbaf-95b2-40d9-a065-be2e08515272" alt="Example GIF">
 
 ## Props
-Commonly required props for most use cases. To see a full list of available properties, see our full documentation.
+Commonly required props for most use cases. To see a full list of available properties, see our [full documentation](https://rts.attebyte.io/#api).
 
 | Property | Type | Required? | Description |
 | ----------- | ----------- | ----------- | ----------- |
-| `data` | `object[]` | yes | The data to be rendered |
-| `uniqueIDProperty` | `string \| number \| symbol` | yes | The property of your tree node that uniquely identifies the node |
-| `labelProperty` | `string \| number \| symbol` | yes | The property of your node to display |
-| `childrenProperty` | `string \| number \| symbol` | yes | The property of your node that holds the node's children |
-| `valueProperty` | `string \| number \| symbol` | yes* | Required if you intend to use the tree to select nodes. If using for display purposes only, not required |
-| `onChange` | `(data: object[]) => void` | yes* | Required if you intend to use the the tree to select nodes. Called every time a node selection is changed with the updated tree
+| `data` | `T[]` | yes* | The data to be rendered, if controlled |
+| `defaultData` | `T[]` | yes* | The data to be rendered, if uncontrolled |
+| `uniqueIDProperty` | `keyof T` | yes | The property of your tree node that uniquely identifies the node |
+| `labelProperty` | `keyof T` | yes | The property of your node to display |
+| `childrenProperty` | `keyof T` | yes | The property of your node that holds the node's children |
+| `valueProperty` | `keyof T` | yes* | Required if you intend to use the tree to select nodes. If using for display purposes only, not required |
+| `onChange` | `(data: T[]) => void` | yes* | Required if you intend to use the the tree to select nodes. Called every time a node selection is changed with the updated tree
 
 ## Customization
 This library is built with customization in mind and contains minimal default styles using tailwind. The library consists of 4 replacable parts:
@@ -106,12 +103,6 @@ This library is built with customization in mind and contains minimal default st
  - `NodeCheck` - The checkbox used to select a node or indicate descendent's selections
  - `ExpandIcon` - Icon to indicate if a node has children or is collapsed / expanded
  For additional information and examples of customization, please see our full documentation.
-
- ## Roadmap
- - Initial Release ✅
- - Improve Performance
- - Improve documentation
- - Improve Test Suite
 
 <br/>
 

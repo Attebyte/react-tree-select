@@ -16,13 +16,8 @@ const SideItem = (props: React.PropsWithChildren<React.AnchorHTMLAttributes<HTML
     ${props.active ? 'bg-gradient-to-r to-slate-800 via-slate-700 from-slate-600 bg-pos-100 border-slate-400' : ''}
   `;
 
-  const handleClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
-    e.preventDefault();
-    props.onClick && props.onClick(e);
-  }
-
     return (
-      <a {...rest} onClick={handleClick} className={`${className} ${props.className}`}
+      <a {...rest} className={`${className} ${props.className}`}
       >
         {props.children}
       </a>

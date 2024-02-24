@@ -17,20 +17,20 @@ const API = (props: Props) => {
             <h2 id='api' className='text-2xl font-bold mb-2 underline'>API</h2>
             <h4 className='font-bold'>TreeSelect <span className='text-sm text-neutral-400'>extends HTMLDivElement</span></h4>
             <div className='flex flex-col'>
-                <div className='flex flex-row rounded-t-lg p-2 font-bold bg-neutral-800'>
-                    <div className='w-3/12'>Property</div>
-                    <div className='w-2/12'>Type</div>
-                    <div className='w-2/12'>Default</div>
-                    <div className='w-2/12'>Required?</div>
-                    <div className='w-3/12'>Description</div>
+                <div className='hidden xl:flex flex-row flex-wrap xl:flex-nowrap rounded-t-lg p-2 font-bold bg-neutral-800'>
+                    <div className='basis-64 flex-shrink-0'>Property</div>
+                    <div className='basis-80 flex-shrink-0'>Type</div>
+                    <div className='basis-20 flex-shrink-0'>Default</div>
+                    <div className='basis-24 flex-shrink-0'>Required?</div>
+                    <div className='basis-auto'>Description</div>
                 </div>
                 {TreeSelectProperties.map((prop, index) => (
-                    <div key={`treeselect-${index}`} className='flex flex-row p-2 table-row-alt'>
-                        <div className='w-3/12'>{prop.name}</div>
-                        <div className='w-2/12'><code>{prop.type}</code></div>
-                        <div className='w-2/12'>{prop.default}</div>
-                        <div className='w-2/12'>{prop.required}</div>
-                        <div className='w-3/12'>{prop.description}</div>
+                    <div key={`treeselect-${index}`} className='flex flex-row flex-wrap xl:flex-nowrap p-2 table-row-alt'>
+                        <div className='basis-auto xl:basis-64 flex-shrink-0 font-bold xl:font-normal'>{prop.name}<span className='xl:hidden'>: </span></div>
+                        <div className='ml-3 xl:ml-0 xl:basis-80 flex-shrink-0'><code>{prop.type}</code></div>
+                        <div className='basis-full xl:basis-20 flex-shrink-0'><span className='xl:hidden'>Default: </span>{prop.default}</div>
+                        <div className='basis-full xl:basis-24 flex-shrink-0'><span className='xl:hidden'>Required: </span>{prop.required}</div>
+                        <div className='basis-full xl:basis-auto mt-4 text-neutral-400 xl:mt-0 xl:text-white whitespace-normal'>{prop.description}</div>
                     </div>
                 ))}
             </div>
@@ -38,80 +38,80 @@ const API = (props: Props) => {
             <h4 className='font-bold mt-6'>Standard Properties</h4>
             <p>TreeNode, NodeLable, NodeCheck, and ExpandIcon all receive a standard set of properties passed down from TreeSelect.</p>
             <div className='flex flex-col mb-6'>
-                <div className='flex flex-row rounded-t-lg p-2 font-bold bg-neutral-800'>
-                    <div className='w-3/12'>Property</div>
-                    <div className='w-3/12'>Type</div>
-                    <div className='w-6/12'>Description</div>
+                <div className='hidden xl:flex flex-row flex-wrap xl:flex-nowrap rounded-t-lg p-2 font-bold bg-neutral-800'>
+                    <div className='basis-64 flex-shrink-0'>Property</div>
+                    <div className='basis-32 flex-shrink-0'>Type</div>
+                    <div className='basis-auto'>Description</div>
                 </div>
                 {StandardProperties.map((prop, index) => (
-                    <div key={`standard-${index}`} className='flex flex-row p-2 table-row-alt'>
-                        <div className='w-3/12'>{prop.name}</div>
-                        <div className='w-3/12'><code>{prop.type}</code></div>
-                        <div className='w-6/12'>{prop.description}</div>
+                    <div key={`standard-${index}`} className='flex flex-row flex-wrap xl:flex-nowrap p-2 table-row-alt'>
+                        <div className='basis-auto xl:basis-64 flex-shrink-0 font-bold xl:font-normal'>{prop.name}<span className='xl:hidden'>: </span></div>
+                        <div className='ml-3 xl:ml-0 xl:basis-32 flex-shrink-0'><code>{prop.type}</code></div>
+                        <div className='basis-full xl:basis-auto mt-4 text-neutral-400 xl:mt-0 xl:text-white whitespace-normal'>{prop.description}</div>
                     </div>
                 ))}
             </div>
 
             <h4 className='font-bold mt-6'>TreeNode <span className='text-sm text-neutral-400'>extends HTMLDivElement</span></h4>
             <div className='flex flex-col mb-6'>
-                <div className='flex flex-row rounded-t-lg p-2 font-bold bg-neutral-800'>
-                    <div className='w-3/12'>Property</div>
-                    <div className='w-3/12'>Type</div>
-                    <div className='w-6/12'>Description</div>
+                <div className='hidden xl:flex flex-row flex-wrap xl:flex-nowrap rounded-t-lg p-2 font-bold bg-neutral-800'>
+                    <div className='basis-64 flex-shrink-0'>Property</div>
+                    <div className='basis-80 flex-shrink-0'>Type</div>
+                    <div className='basis-auto'>Description</div>
                 </div>
                 {TreeNodeProperties.map((prop, index) => (
-                    <div key={`treenode-${index}`} className='flex flex-row p-2 table-row-alt'>
-                        <div className='w-3/12'>{prop.name}</div>
-                        <div className='w-3/12'><code>{prop.type}</code></div>
-                        <div className='w-6/12'>{prop.description}</div>
+                    <div key={`treenode-${index}`} className='flex flex-row flex-wrap xl:flex-nowrap p-2 table-row-alt'>
+                        <div className='basis-auto xl:basis-64 flex-shrink-0 font-bold xl:font-normal'>{prop.name}<span className='xl:hidden'>: </span></div>
+                        <div className='ml-3 xl:ml-0 xl:basis-80 flex-shrink-0'><code>{prop.type}</code></div>
+                        <div className='basis-full xl:basis-auto mt-4 text-neutral-400 xl:mt-0 xl:text-white whitespace-normal'>{prop.description}</div>
                     </div>
                 ))}
             </div>
 
             <h4 className='font-bold mt-6'>NodeLabel <span className='text-sm text-neutral-400'>extends HTMLSpanElement</span></h4>
             <div className='flex flex-col mb-6'>
-                <div className='flex flex-row rounded-t-lg p-2 font-bold bg-neutral-800'>
-                    <div className='w-3/12'>Property</div>
-                    <div className='w-3/12'>Type</div>
-                    <div className='w-6/12'>Description</div>
+                <div className='hidden xl:flex flex-row flex-wrap xl:flex-nowrap rounded-t-lg p-2 font-bold bg-neutral-800'>
+                    <div className='basis-64 flex-shrink-0'>Property</div>
+                    <div className='basis-80 flex-shrink-0'>Type</div>
+                    <div className='basis-auto'>Description</div>
                 </div>
                 {NodeLabelProperties.map((prop, index) => (
-                    <div key={`nodelabel-${index}`} className='flex flex-row p-2 table-row-alt'>
-                        <div className='w-3/12'>{prop.name}</div>
-                        <div className='w-3/12'><code>{prop.type}</code></div>
-                        <div className='w-6/12'>{prop.description}</div>
+                    <div key={`nodelabel-${index}`} className='flex flex-row flex-wrap xl:flex-nowrap p-2 table-row-alt'>
+                        <div className='basis-auto xl:basis-64 flex-shrink-0 font-bold xl:font-normal'>{prop.name}<span className='xl:hidden'>: </span></div>
+                        <div className='ml-3 xl:ml-0 xl:basis-80 flex-shrink-0'><code>{prop.type}</code></div>
+                        <div className='basis-full xl:basis-auto mt-4 text-neutral-400 xl:mt-0 xl:text-white whitespace-normal'>{prop.description}</div>
                     </div>
                 ))}
             </div>
 
             <h4 className='font-bold mt-6'>NodeCheck <span className='text-sm text-neutral-400'>extends HTMLInputElement</span></h4>
             <div className='flex flex-col mb-6'>
-                <div className='flex flex-row rounded-t-lg p-2 font-bold bg-neutral-800'>
-                    <div className='w-3/12'>Property</div>
-                    <div className='w-3/12'>Type</div>
-                    <div className='w-6/12'>Description</div>
+                <div className='hidden xl:flex flex-row flex-wrap xl:flex-nowrap rounded-t-lg p-2 font-bold bg-neutral-800'>
+                    <div className='basis-64 flex-shrink-0'>Property</div>
+                    <div className='basis-32 flex-shrink-0'>Type</div>
+                    <div className='basis-auto'>Description</div>
                 </div>
                 {NodeCheckProperties.map((prop, index) => (
-                    <div key={`nodecheck-${index}`} className='flex flex-row p-2 table-row-alt'>
-                        <div className='w-3/12'>{prop.name}</div>
-                        <div className='w-3/12'><code>{prop.type}</code></div>
-                        <div className='w-6/12'>{prop.description}</div>
+                    <div key={`nodecheck-${index}`} className='flex flex-row flex-wrap xl:flex-nowrap p-2 table-row-alt'>
+                        <div className='basis-auto xl:basis-64 flex-shrink-0 font-bold xl:font-normal'>{prop.name}<span className='xl:hidden'>: </span></div>
+                        <div className='ml-3 xl:ml-0 xl:basis-32 flex-shrink-0'><code>{prop.type}</code></div>
+                        <div className='basis-full xl:basis-auto mt-4 text-neutral-400 xl:mt-0 xl:text-white whitespace-normal'>{prop.description}</div>
                     </div>
                 ))}
             </div>
 
             <h4 className='font-bold mt-6'>ExpandIcon <span className='text-sm text-neutral-400'>extends HTMLSpanElement</span></h4>
             <div className='flex flex-col'>
-                <div className='flex flex-row rounded-t-lg p-2 font-bold bg-neutral-800'>
-                    <div className='w-3/12'>Property</div>
-                    <div className='w-3/12'>Type</div>
-                    <div className='w-6/12'>Description</div>
+                <div className='hidden xl:flex flex-row flex-wrap xl:flex-nowrap rounded-t-lg p-2 font-bold bg-neutral-800'>
+                    <div className='basis-64 flex-shrink-0'>Property</div>
+                    <div className='basis-32 flex-shrink-0'>Type</div>
+                    <div className='basis-auto'>Description</div>
                 </div>
                 {ExpandIconProperties.map((prop, index) => (
-                    <div key={`expandicon-${index}`} className='flex flex-row p-2 table-row-alt'>
-                        <div className='w-3/12'>{prop.name}</div>
-                        <div className='w-3/12'><code>{prop.type}</code></div>
-                        <div className='w-6/12'>{prop.description}</div>
+                    <div key={`expandicon-${index}`} className='flex flex-row flex-wrap xl:flex-nowrap p-2 table-row-alt'>
+                        <div className='basis-auto xl:basis-64 flex-shrink-0 font-bold xl:font-normal'>{prop.name}<span className='xl:hidden'>: </span></div>
+                        <div className='ml-3 xl:ml-0 xl:basis-32 flex-shrink-0'><code>{prop.type}</code></div>
+                        <div className='basis-full xl:basis-auto mt-4 text-neutral-400 xl:mt-0 xl:text-white whitespace-normal'>{prop.description}</div>
                     </div>
                 ))}
             </div>

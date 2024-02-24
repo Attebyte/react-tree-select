@@ -24,7 +24,7 @@ const CustomNodeComponent = (props: TreeNodeProps<typeof ExampleData[number]>) =
   const hasChildren = node.children && Array.isArray(node.children) && node.children.length > 0;
 
   return (
-    <div className='flex flex-wrap basis-full border-l border-neutral-500 my-3 pl-3'>
+    <div className='flex basis-full border-l border-neutral-500 my-3 pl-3'>
       <CustomAvatar
         standardComponentProps={props.standardComponentProps}
       />

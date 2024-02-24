@@ -12,6 +12,11 @@ const Layout = (props: React.PropsWithChildren<Props>) => {
 
   const [expanded, setExpanded] = useState(false);
 
+  const handleClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault();
+    props.onLinkClick && props.onLinkClick(e);
+  }
+
   return (
     <div className="h-full w-full flex flex-column overflow-hidden bg-slate-800 text-white">
       <div className="max-w-full basis-full flex mx-auto ">
@@ -26,7 +31,7 @@ const Layout = (props: React.PropsWithChildren<Props>) => {
               active={props.currentHash === 'installation'}
               className={`${expanded ? 'p-2' : 'h-0 lg:h-auto lg:p-2'} lg:flex overflow-hidden lg:overflow-visible`}
               href='#installation'
-              onClick={props.onLinkClick}
+              onClick={handleClick}
             >
               Installation
             </SideItem>
@@ -34,7 +39,7 @@ const Layout = (props: React.PropsWithChildren<Props>) => {
               active={props.currentHash === 'getting-started'}
               className={`${expanded ? 'p-2' : 'h-0 lg:h-auto lg:p-2'} lg:flex overflow-hidden lg:overflow-visible`}
               href='#getting-started'
-              onClick={props.onLinkClick}
+              onClick={handleClick}
             >
               Getting Started
             </SideItem>
@@ -42,7 +47,7 @@ const Layout = (props: React.PropsWithChildren<Props>) => {
               active={props.currentHash === 'api'}
               className={`${expanded ? 'p-2' : 'h-0 lg:h-auto lg:p-2'} lg:flex overflow-hidden lg:overflow-visible`}
               href='#api'
-              onClick={props.onLinkClick}
+              onClick={handleClick}
             >
               Props API
             </SideItem>
@@ -51,7 +56,7 @@ const Layout = (props: React.PropsWithChildren<Props>) => {
               active={props.currentHash === 'examples'}
               className={`${expanded ? 'p-2' : 'h-0 lg:h-auto lg:p-2'} lg:flex overflow-hidden lg:overflow-visible`}
               href='#examples'
-              onClick={props.onLinkClick}
+              onClick={handleClick}
             >
               Examples
             </SideItem>

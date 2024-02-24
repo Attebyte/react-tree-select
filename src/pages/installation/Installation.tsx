@@ -1,4 +1,5 @@
 import React from 'react';
+import Code from '../../shared/Code';
 
 interface Props extends React.HTMLProps<HTMLDivElement> { }
 
@@ -9,16 +10,12 @@ const Installation = (props: Props) => {
       <p>
         To install the package, simply use your favorite package manager.
       </p>
-      <pre className='bg-neutral-800 p-3 rounded-lg my-6'>
-        <code>
-          npm install @attebyte/react-tree-select
-        </code>
-      </pre>
-      <pre className='bg-neutral-800 p-3 rounded-lg my-6'>
-        <code>
-          yarn add @attebyte/react-tree-select
-        </code>
-      </pre>
+      <Code>
+        npm install @attebyte/react-tree-select
+      </Code>
+      <Code>
+        yarn add @attebyte/react-tree-select
+      </Code>
     </div>
   )
 }
