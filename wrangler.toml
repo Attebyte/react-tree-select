@@ -1,6 +1,11 @@
-# Cloudflare Pages (Git-connected).
-# Dashboard build command must be `npm run build-site` (not `npm run build`,
-# which emits the npm library to dist/).
+# Cloudflare Workers (Git-connected Builds).
+# Dashboard:
+#   Build command:  npm run build-site   (not `npm run build`, which emits the library to dist/)
+#   Deploy command: npx wrangler deploy
 name = "react-tree-select"
 compatibility_date = "2026-08-29"
-pages_build_output_dir = "./hosting"
+preview_urls = true
+
+[assets]
+directory = "./hosting"
+not_found_handling = "single-page-application"
