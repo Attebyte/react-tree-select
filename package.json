@@ -20,6 +20,9 @@
     "type": "git",
     "url": "https://github.com/Attebyte/react-tree-select"
   },
+  "engines": {
+    "node": ">=20"
+  },
   "scripts": {
     "dev": "vite",
     "build": "tsc --p ./tsconfig.build.json && vite build",
