@@ -66,6 +66,7 @@
   ],
   "publishConfig": {
     "registry": "https://registry.npmjs.org/",
+    "@attebyte:registry": "https://registry.npmjs.org/",
     "access": "public"
   },
   "engines": {
