@@ -1,0 +1,45 @@
+---
+title: Controlled usage
+description: Control a React checkbox tree from your own state with the data and onChange props, and read the selected IDs with getSelectedIDs.
+keywords: [controlled tree select react, react tree onChange, react checkbox tree state]
+---
+
+import LiveExample from '@site/src/components/LiveExample';
+import ControlledExample from '@site/../examples/ControlledExample';
+import ControlledExampleSource from '!!raw-loader!@site/../examples/ControlledExample.tsx';
+
+# Controlled usage
+
+There are two ways to give TreeSelect its data:
+
+| Prop | Mode | Who owns the selection |
+| --- | --- | --- |
+| `defaultData` | Uncontrolled | TreeSelect. It starts from the data passed on the first render (later changes to `defaultData` are ignored), applies each selection itself, and reports it through `onChange`. |
+| `data` | Controlled | You. TreeSelect renders exactly the `data` it receives, and only reports changes through `onChange`. |
+
+## Controlled example
+
+Keep the tree in state and pass `onChange` your state setter:
+
+<LiveExample source={ControlledExampleSource} title='ControlledExample.tsx'>
+  <ControlledExample />
+</LiveExample>
+
+If you pass `data` but don't update it from `onChange`, checking a node has no visible effect, the same as a controlled `<input>` without an `onChange` handler. This makes it easy to reject or adjust a change before applying it.
+
+## What `onChange` receives
+
+`onChange` is called with a new tree every time a selection changes. TreeSelect never modifies the data you pass in:
+
+- Nodes that changed, and their ancestors, are new objects.
+- Every other node is the same object as before, so unchanged subtrees can be compared with `===`.
+
+Treat the result as immutable. If you need to change it, copy the nodes you modify, as you would with any React state.
+
+## Loading data later
+
+`data` can start as `undefined` (for example while a request is in flight). TreeSelect renders nothing until it receives an array.
+
+## Expansion state
+
+Which nodes are expanded is managed by TreeSelect in both modes. `defaultExpanded` sets whether nodes start expanded, and changing it later expands or collapses every node.

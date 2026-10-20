@@ -1,0 +1,97 @@
+---
+title: Selection
+description: How tri-state (indeterminate) selection works in React Tree Select, how disabled nodes behave, and how to read the selected IDs or nodes from the tree.
+keywords: [react indeterminate checkbox tree, tri-state checkbox react, get selected ids tree react, react tree disabled nodes]
+---
+
+# Selection
+
+Each node's checked state is stored in the property named by `valueProperty`:
+
+| Value | Meaning |
+| --- | --- |
+| `true` | Checked |
+| `false` or missing | Unchecked |
+| `null` | Mixed (indeterminate): some of the node's descendants are checked |
+
+Without `valueProperty` the tree is display-only: nodes can be expanded but not checked.
+
+## Chained selection
+
+By default (`chainedSelect={true}`), selection flows through the tree:
+
+- **Checking or unchecking a node** applies the same value to all of its enabled descendants.
+- **A parent's state is derived from its children.** It is checked when all of its children are checked, unchecked when none are, and mixed otherwise. This is recalculated for every ancestor of the node that changed.
+- **Clicking a mixed parent** checks all of its enabled descendants, unless they are already all checked (see [Disabled nodes](#disabled-nodes)).
+
+Set `chainedSelect={false}` to select every node independently. Parents are then never mixed.
+
+## Disabled nodes
+
+Set `disabledProperty` to the name of a boolean property on your nodes. A node whose property is `true` can't be checked or unchecked by the user, and:
+
+- With chained selection, its descendants are disabled too, and checking an ancestor skips the whole disabled branch.
+- A disabled node keeps its value, so it still counts when its parent's state is derived. If you check a parent that has a disabled, unchecked child, the parent becomes **mixed**, not checked, because not everything under it is selected.
+- Clicking that mixed parent again (or pressing <kbd>Space</kbd> or <kbd>Enter</kbd>) unchecks its enabled descendants, so the parent can't get stuck in the mixed state.
+- A disabled node that starts out checked stays checked when its parent is unchecked.
+- A parent whose descendants are all disabled can't change either, so it is shown as disabled too. It can still be expanded.
+
+## Changing selection from code
+
+A custom component can change selection with `onChange(node, value)`, which applies the same chained rules as a click. It is a plain setter: `onChange(parent, true)` on a mixed parent whose enabled descendants are already checked changes nothing. To get the click behavior, which unchecks them instead, pass `{ toggle: true }`:
+
+```tsx
+props.onChange(node, node.included !== true, { toggle: true });
+```
+
+TreeSelect only calls its own `onChange` prop when something actually changed.
+
+`disabled` on the tree itself disables every node. `expandDisabledNodes` (default `true`) controls whether disabled nodes can still be expanded and collapsed.
+
+See the [disabled nodes example](./examples/disabled-nodes.mdx).
+
+## Reading the selection
+
+Two helpers turn a tree into the selection you need. Both only count nodes whose value is `true`; mixed nodes are not selected.
+
+```ts
+import { getSelectedIDs, getSelectedNodes } from '@attebyte/react-tree-select';
+
+const ids = getSelectedIDs(tree, {
+  uniqueIDProperty: 'value',
+  childrenProperty: 'children',
+  valueProperty: 'included',
+  mode: 'leaves'
+});
+
+const nodes = getSelectedNodes(tree, {
+  childrenProperty: 'children',
+  valueProperty: 'included'
+});
+```
+
+`mode` chooses which checked nodes are returned:
+
+| Mode | Returns | Use it when |
+| --- | --- | --- |
+| `'all'` (default) | Every checked node | You need everything that is checked, at any level. |
+| `'leaves'` | Checked nodes without children | Only the bottom-level items matter, such as files rather than folders. |
+| `'topmost'` | Checked nodes whose parent is not checked | You want the shortest list: a fully checked parent stands in for its entire subtree. |
+
+For example, with `Child 1` and its two children checked:
+
+```text
+[-] Root 1
+    [x] Child 1
+        [x] Grandchild 1
+        [x] Grandchild 2
+    [ ] Child 2
+```
+
+| Mode | Result |
+| --- | --- |
+| `'all'` | `Child 1`, `Grandchild 1`, `Grandchild 2` |
+| `'leaves'` | `Grandchild 1`, `Grandchild 2` |
+| `'topmost'` | `Child 1` |
+
+Results are returned in display order (depth first).

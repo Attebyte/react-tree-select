@@ -11,5 +11,8 @@ export type { NodeLabelProps } from './components/NodeLabel';
 export type { StandardComponentProps } from './components/TreeSelect';
 export type { ExpandIconProps } from './components/ExpandIcon';
 export type { NodeCheckProps } from './components/NodeCheck';
-export type { TreeNodeProps } from './components/TreeNode';
-export type { TreeSelectProps } from './components/TreeSelect';
+export type { TreeNodeProps, TreeItemAttributes } from './components/TreeNode';
+export type { TreeSelectProps, NodeChangeOptions } from './components/TreeSelect';
+
+export { getSelectedIDs, getSelectedNodes } from './utils/TreeUtility';
+export type { SelectionMode, SelectedIDsOptions, SelectedNodesOptions } from './utils/TreeUtility';

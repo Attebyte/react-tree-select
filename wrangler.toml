@@ -1,11 +1,13 @@
 # Cloudflare Workers (Git-connected Builds).
 # Dashboard:
-#   Build command:  npm run build-site   (not `npm run build`, which emits the library to dist/)
+#   Build command:  npm run build-site   (not `npm run build`, which only emits the library to dist/)
 #   Deploy command: npx wrangler deploy
+# build-site builds the library, Storybook and the Docusaurus site, and publishes Storybook under /storybook/.
 name = "react-tree-select"
 compatibility_date = "2026-08-29"
 preview_urls = true
 
 [assets]
-directory = "./hosting"
-not_found_handling = "single-page-application"
+directory = "./website/build"
+# Docusaurus generates a real 404 page; serving it with a 404 status keeps missing URLs out of search results
+not_found_handling = "404-page"

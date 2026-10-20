@@ -1,16 +1,25 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { NodeCheckProps } from './NodeCheck';
 import { NodeLabelProps } from './NodeLabel';
 import { ExpandIconProps } from './ExpandIcon';
 import { cva, VariantProps } from 'class-variance-authority';
 import { cn } from '../utils/ClassUtility';
-import { StandardComponentProps } from './TreeSelect';
+import { getChildren } from '../utils/TreeUtility';
+import { NodeChangeOptions, StandardComponentProps } from './TreeSelect';
+
+// Accessibility attributes (role, tabIndex, aria-*) and the focus ref for a node.
+// Spread onto the node's root element to take part in keyboard navigation.
+export interface TreeItemAttributes extends React.HTMLAttributes<HTMLElement> {
+  ref: React.RefCallback<HTMLElement>;
+}
 
 interface Props<T> {
   standardComponentProps: StandardComponentProps<T>;
+  treeItemProps?: TreeItemAttributes;
 
   disabled?: boolean;
   level?: number;
+  expanded?: boolean;
   defaultExpanded?: boolean;
   expandDisabledNodes?: boolean;
   chainedSelect?: boolean;
@@ -26,10 +35,11 @@ interface Props<T> {
   LabelComponent: React.ComponentType<NodeLabelProps<T>>;
   ExpandIconComponent: React.ComponentType<ExpandIconProps<T>>;
 
-  onChange: (node: T, value: boolean | null) => void;
+  onChange: (node: T, value: boolean | null, options?: NodeChangeOptions) => void;
+  onExpandedChange?: (expanded: boolean) => void;
 }
 
-const nodeVariants = cva("", {
+const nodeVariants = cva("outline-hidden", {
   variants: {
       nested: {
           true: "ps-3"
@@ -44,19 +54,15 @@ const TreeNode = <T,>(props: TreeNodeProps<T>) => {
     CheckComponent,
     LabelComponent,
     ExpandIconComponent,
-    standardComponentProps: {
-      node,
-      uniqueIDProperty,
-      labelProperty,
-      valueProperty,
-      childrenProperty,
-      disabledProperty
-    },
+    standardComponentProps,
+    treeItemProps,
     disabled,
     level,
+    expanded = false,
     defaultExpanded,
     expandDisabledNodes,
     chainedSelect,
+    nested,
     labelClassName,
     labelStyle,
     iconClassName,
@@ -64,71 +70,73 @@ const TreeNode = <T,>(props: TreeNodeProps<T>) => {
     inputClassName,
     inputStyle,
     onChange,
+    onExpandedChange,
+    children,
+    className,
     ...rest
   } = props;
 
-  const [expanded, setExpanded] = useState<boolean>(props.defaultExpanded ?? false);
+  const { node, labelProperty, valueProperty, childrenProperty, disabledProperty } = standardComponentProps;
 
-  const isDisabled = props.disabled || (disabledProperty && node[disabledProperty] === true);
-  const hasChildren = node[childrenProperty] && Array.isArray(node[childrenProperty]) && (node[childrenProperty] as T[]).length > 0;
+  const isDisabled = disabled || (disabledProperty !== undefined && node[disabledProperty] === true);
+  const hasChildren = getChildren(node, childrenProperty).length > 0;
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    onChange(node, e.target.checked);
+    onChange(node, e.target.checked, { toggle: true });
   }
 
   const handleLabelClick = () => {
-    if ((props.expandDisabledNodes || !isDisabled) && node[childrenProperty] && Array.isArray(node[childrenProperty]) && (node[childrenProperty] as T[]).length > 0) {
-      setExpanded(!expanded);
-    } else if (!isDisabled) {
-      onChange(node, !node[valueProperty!]);
+    if ((expandDisabledNodes || !isDisabled) && hasChildren) {
+      onExpandedChange?.(!expanded);
+    } else if (!isDisabled && valueProperty !== undefined) {
+      onChange(node, node[valueProperty] !== true, { toggle: true });
     }
   }
 
   return (
     <div
+      {...treeItemProps}
       {...rest}
-      className={cn(nodeVariants({ nested: (props.level && props.level > 0) === true }), props.className)}
+      className={cn(nodeVariants({ nested: nested ?? (level ?? 0) > 0 }), className)}
     >
       <CheckComponent
-        standardComponentProps={props.standardComponentProps}
+        standardComponentProps={standardComponentProps}
 
-        className={props.inputClassName}
-        style={props.inputStyle}
+        className={inputClassName}
+        style={inputStyle}
         disabled={isDisabled}
         expanded={expanded}
-        checked={node[valueProperty!] as boolean | null | undefined}
+        checked={valueProperty !== undefined ? node[valueProperty] as boolean | null | undefined : undefined}
 
         onChange={handleChange}
       />
       <LabelComponent
-        standardComponentProps={props.standardComponentProps}
+        standardComponentProps={standardComponentProps}
 
         label={node[labelProperty] as string}
-        expandDisabledNodes={props.expandDisabledNodes}
+        expandDisabledNodes={expandDisabledNodes}
         disabled={isDisabled}
         hasChildren={hasChildren}
         expanded={expanded}
 
-        className={props.labelClassName}
-        style={props.labelStyle}
-        iconClassName={props.iconClassName}
-        iconStyle={props.iconStyle}
+        className={labelClassName}
+        style={labelStyle}
+        iconClassName={iconClassName}
+        iconStyle={iconStyle}
 
         ExpandIconComponent={ExpandIconComponent}
 
         onClick={handleLabelClick}
       />
-      {hasChildren && expanded && (node[childrenProperty] as T[]).map((child, index) => (
-        <TreeNode
-          key={`${node[uniqueIDProperty]}-${index}`}
-          {...props}
-          standardComponentProps={{ ...props.standardComponentProps, node: child }}
-          disabled={props.disabled || (props.chainedSelect && isDisabled)}
-          level={(props.level ?? 0) + 1}
-        />
-      ))}
+      {children && (
+        <div role='group' className='basis-full'>
+          {children}
+        </div>
+      )}
     </div>
   );
 };
 
-export default React.memo(TreeNode) as typeof TreeNode;
+const MemoTreeNode = React.memo(TreeNode) as typeof TreeNode;
+
+export default MemoTreeNode;

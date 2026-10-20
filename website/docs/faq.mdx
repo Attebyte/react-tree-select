@@ -1,0 +1,43 @@
+---
+title: FAQ
+description: Answers to common questions about React Tree Select, including getting selected IDs, indeterminate checkboxes, styling without Tailwind, and server-side rendering.
+keywords: [react tree select faq, react tree get checked nodes, react indeterminate checkbox, react tree ssr]
+---
+
+# FAQ
+
+## How do I get the IDs of the checked nodes?
+
+Use `getSelectedIDs` with the tree from `onChange`. Choose `mode: 'leaves'` for only bottom-level nodes, or `'topmost'` to let a fully checked parent stand in for its subtree. See [Reading the selection](./selection.mdx#reading-the-selection).
+
+## How do I pre-select nodes?
+
+Set `valueProperty` on the nodes in your data before passing it in, for example `included: true`. With chained selection, set the parents' values to match their children (`true`, or `null` for mixed), because TreeSelect only recalculates parents when a node changes.
+
+## How does the indeterminate (mixed) state work?
+
+A parent is mixed (`null`) when some, but not all, of its descendants are checked. The checkbox shows a square, the input's `indeterminate` property is set, and screen readers announce the node as partially checked. See [Selection](./selection.mdx).
+
+## Can I use it without Tailwind CSS?
+
+Yes. Import `@attebyte/react-tree-select/style.css` for the default styles, and pass your own class names or `style` objects. Tailwind is only needed if you want to style it with Tailwind classes.
+
+## Does importing the stylesheet affect the rest of my app?
+
+No. The stylesheet only contains the classes the component uses. It has no global resets and doesn't declare theme variables that could override your own Tailwind theme.
+
+## Does it support server-side rendering?
+
+Yes. Both controlled and uncontrolled trees render on the server, including Next.js and other React frameworks. The tree is fully interactive once hydrated.
+
+## Which versions of React are supported?
+
+React 18 and React 19.
+
+## Can it load children lazily?
+
+TreeSelect renders the data you pass. To load children on demand, use [controlled usage](./controlled.mdx): when a node is expanded in your custom node component (`onExpandedChange`), fetch its children and add them to your state.
+
+## Why is a parent mixed even though all of its enabled children are checked?
+
+One of its children is disabled and unchecked. A parent is only checked when everything under it is checked. Clicking it again unchecks its enabled children. See [Disabled nodes](./selection.mdx#disabled-nodes).

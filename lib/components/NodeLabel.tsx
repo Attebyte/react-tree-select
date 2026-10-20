@@ -17,7 +17,11 @@ interface Props<T> {
     ExpandIconComponent: React.ComponentType<ExpandIconProps<T>>;
 }
 
-const labelVariants = cva("ps-3 hover:cursor-pointer hover:opacity-75", {
+// The tree item itself takes focus; the focus ring is drawn on its label so it outlines one row, not the whole subtree
+const labelVariants = cva(`
+    ps-3 rounded-xs hover:cursor-pointer hover:opacity-75
+    [:focus-visible>&]:outline [:focus-visible>&]:outline-2 [:focus-visible>&]:outline-offset-2
+`, {
     variants: {
         disabled: {
             true: "opacity-60 hover:cursor-default hover:opacity-60"
@@ -34,6 +38,9 @@ const NodeLabel = <T,>(props: NodeLabelProps<T>) => {
 
     const {
         standardComponentProps,
+        label,
+        disabled,
+        expandEnabled,
         expandDisabledNodes,
         hasChildren,
         expanded,
@@ -45,14 +52,15 @@ const NodeLabel = <T,>(props: NodeLabelProps<T>) => {
 
     return (
         <span
-            role='button'
             {...rest}
-            className={cn(labelVariants({ disabled: props.disabled, expandEnabled: props.expandDisabledNodes && props.hasChildren }), props.className)}
+            className={cn(labelVariants({ disabled, expandEnabled: expandEnabled ?? (expandDisabledNodes && hasChildren) }), props.className)}
         >
-            {props.label}
-            <ExpandIconComponent standardComponentProps={props.standardComponentProps} show={props.hasChildren} expanded={props.expanded === true} className={iconClassName} style={iconStyle} />
+            {label}
+            <ExpandIconComponent standardComponentProps={standardComponentProps} show={hasChildren} expanded={expanded === true} className={iconClassName} style={iconStyle} />
         </span>
     );
 };
 
-export default React.memo(NodeLabel) as typeof NodeLabel;
+const MemoNodeLabel = React.memo(NodeLabel) as typeof NodeLabel;
+
+export default MemoNodeLabel;

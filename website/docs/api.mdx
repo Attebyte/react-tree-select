@@ -1,0 +1,150 @@
+---
+title: API reference
+description: Complete props reference for the React Tree Select component, its replaceable parts (TreeNode, NodeLabel, NodeCheck, ExpandIcon) and the getSelectedIDs helper.
+keywords: [react tree select props, react tree select api, TreeSelect props, getSelectedIDs]
+---
+
+# API reference
+
+```tsx
+import TreeSelect, {
+  TreeNode, NodeLabel, NodeCheck, ExpandIcon,
+  getSelectedIDs, getSelectedNodes
+} from '@attebyte/react-tree-select';
+import '@attebyte/react-tree-select/style.css';
+```
+
+`T` is the type of your nodes. Every exported component and helper is generic over it.
+
+## TreeSelect
+
+The tree component (default export). It renders a `div` with `role="tree"`, and any other `div` props (`className`, `style`, `aria-label`, `onKeyDown`, ...) are passed to it.
+
+### Data
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `data` | `T[]` | | The tree to render, for [controlled usage](./controlled.mdx). TreeSelect renders exactly this data. |
+| `defaultData` | `T[]` | | The initial tree, for uncontrolled usage. Ignored when `data` is provided. |
+| `onChange` | `(data: T[]) => void` | | Called with the updated tree whenever a node is checked or unchecked (only when something changed). Unchanged nodes are shared with the previous tree. |
+| `uniqueIDProperty` | `keyof T` | **required** | Property that uniquely identifies each node. IDs must be unique across the whole tree. |
+| `labelProperty` | `keyof T` | **required** | Property that holds the node's label. Also used as the node's accessible name. |
+| `childrenProperty` | `keyof T` | **required** | Property that holds the node's children (an array). |
+| `valueProperty` | `keyof T` | | Property that holds the checked state: `true`, `false`/missing, or `null` for mixed. Without it, the tree is display-only. |
+| `disabledProperty` | `keyof T` | | Property that marks a node as disabled when `true`. |
+
+### Behavior
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `chainedSelect` | `boolean` | `true` | Checking a node checks its enabled descendants, parents derive their state from their children, and descendants of disabled nodes are disabled. See [Selection](./selection.mdx). |
+| `defaultExpanded` | `boolean` | `false` | Whether nodes start expanded. Changing it expands or collapses every node. |
+| `disabled` | `boolean` | `false` | Disable every node. |
+| `expandDisabledNodes` | `boolean` | `true` | Whether disabled nodes can be expanded and collapsed. |
+
+### Styling
+
+| Prop | Type | Description |
+| --- | --- | --- |
+| `nodeClassName` / `nodeStyle` | `string` / `CSSProperties` | Applied to each node's container. |
+| `labelClassName` / `labelStyle` | `string` / `CSSProperties` | Applied to each label. |
+| `inputClassName` / `inputStyle` | `string` / `CSSProperties` | Applied to each checkbox. |
+| `iconClassName` / `iconStyle` | `string` / `CSSProperties` | Applied to each expand icon. |
+
+Class names are merged with the defaults using tailwind-merge. See [Customization](./customization.mdx).
+
+### Custom components
+
+| Prop | Type | Description |
+| --- | --- | --- |
+| `CustomNodeComponent` | `ComponentType<TreeNodeProps<T>>` | Replaces `TreeNode`. |
+| `CustomLabelComponent` | `ComponentType<NodeLabelProps<T>>` | Replaces `NodeLabel`. |
+| `CustomCheckComponent` | `ComponentType<NodeCheckProps<T>>` | Replaces `NodeCheck`. |
+| `CustomExpandIconComponent` | `ComponentType<ExpandIconProps<T>>` | Replaces `ExpandIcon`. |
+
+## Standard component props
+
+Every part receives `standardComponentProps`:
+
+| Property | Type | Description |
+| --- | --- | --- |
+| `node` | `T` | The node being rendered. |
+| `expanded` | `boolean` | Whether the node is expanded. |
+| `uniqueIDProperty` | `keyof T` | As passed to TreeSelect. |
+| `labelProperty` | `keyof T` | As passed to TreeSelect. |
+| `valueProperty` | `keyof T \| undefined` | As passed to TreeSelect. |
+| `childrenProperty` | `keyof T` | As passed to TreeSelect. |
+| `disabledProperty` | `keyof T \| undefined` | As passed to TreeSelect. |
+
+## TreeNode
+
+The container for a node. Renders a `div`; other `div` props are passed to it.
+
+| Prop | Type | Description |
+| --- | --- | --- |
+| `standardComponentProps` | `StandardComponentProps<T>` | See above. |
+| `treeItemProps` | `TreeItemAttributes` | `role`, `tabIndex`, `aria-*` attributes and a focus ref. Spread onto the node's root element. |
+| `children` | `ReactNode` | The rendered nested nodes, provided only while the node is expanded. |
+| `expanded` | `boolean` | Whether the node is expanded. |
+| `onExpandedChange` | `(expanded: boolean) => void` | Expand or collapse the node. |
+| `onChange` | `(node: T, value: boolean \| null, options?: NodeChangeOptions) => void` | Set a node's checked state, applying chained selection. Pass `{ toggle: true }` for click-like toggling; see [Changing selection from code](./selection.mdx#changing-selection-from-code). |
+| `level` | `number` | Depth of the node; root nodes are `0`. |
+| `disabled` | `boolean` | Disabled by the tree, or (with chained selection) by a disabled ancestor. Check `disabledProperty` for the node's own state. |
+| `defaultExpanded`, `expandDisabledNodes`, `chainedSelect` | `boolean` | As passed to TreeSelect. |
+| `labelClassName`, `labelStyle`, `inputClassName`, `inputStyle`, `iconClassName`, `iconStyle` | | As passed to TreeSelect, for the node's parts. |
+| `CheckComponent`, `LabelComponent`, `ExpandIconComponent` | `ComponentType` | The part components to render (the defaults or your custom components). |
+
+## NodeLabel
+
+Renders a `span`; other `span` props are passed to it.
+
+| Prop | Type | Description |
+| --- | --- | --- |
+| `standardComponentProps` | `StandardComponentProps<T>` | See above. |
+| `label` | `string` | The label text. |
+| `hasChildren` | `boolean` | Whether the node has children. |
+| `expanded` | `boolean` | Whether the node is expanded. |
+| `disabled` | `boolean` | Whether the node is disabled. |
+| `expandDisabledNodes` | `boolean` | Whether disabled nodes can be expanded. |
+| `iconClassName` / `iconStyle` | | Passed to the expand icon. |
+| `ExpandIconComponent` | `ComponentType<ExpandIconProps<T>>` | The expand icon to render. |
+
+## NodeCheck
+
+Renders an `<input type="checkbox">`; other `input` props are passed to it.
+
+| Prop | Type | Description |
+| --- | --- | --- |
+| `standardComponentProps` | `StandardComponentProps<T>` | See above. |
+| `checked` | `boolean \| null` | `true` when checked, `null` when mixed. Sets the input's `indeterminate` state. |
+| `expanded` | `boolean` | Whether the node is expanded. |
+| `disabled` | `boolean` | Whether the node is disabled. |
+| `myRef` | `Ref<HTMLInputElement>` | Ref to the input element. |
+
+## ExpandIcon
+
+Renders a `span`; other `span` props are passed to it.
+
+| Prop | Type | Description |
+| --- | --- | --- |
+| `standardComponentProps` | `StandardComponentProps<T>` | See above. |
+| `expanded` | `boolean` | Whether the node is expanded. |
+| `show` | `boolean` | Whether to render the icon (true for nodes with children). |
+
+## getSelectedIDs / getSelectedNodes
+
+```ts
+getSelectedIDs<T>(data: T[], options: SelectedIDsOptions<T>): T[keyof T][]
+getSelectedNodes<T>(data: T[], options: SelectedNodesOptions<T>): T[]
+```
+
+| Option | Type | Description |
+| --- | --- | --- |
+| `uniqueIDProperty` | `keyof T` | Property holding the ID (`getSelectedIDs` only). |
+| `childrenProperty` | `keyof T` | Property holding the children. |
+| `valueProperty` | `keyof T` | Property holding the checked state. |
+| `mode` | `'all' \| 'leaves' \| 'topmost'` | Which checked nodes to return. Defaults to `'all'`. See [Reading the selection](./selection.mdx#reading-the-selection). |
+
+## Exported types
+
+`TreeSelectProps`, `TreeNodeProps`, `NodeLabelProps`, `NodeCheckProps`, `ExpandIconProps`, `StandardComponentProps`, `TreeItemAttributes`, `NodeChangeOptions`, `SelectionMode`, `SelectedIDsOptions`, `SelectedNodesOptions`.

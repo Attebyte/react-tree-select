@@ -1,0 +1,19 @@
+---
+title: File tree
+description: Build a React file tree (folder and file explorer) by replacing the checkboxes in React Tree Select with folder and file icons.
+keywords: [react file tree, react folder tree component, react file explorer tree, react directory tree]
+---
+
+import LiveExample from '@site/src/components/LiveExample';
+import CustomCheckExample from '@site/../examples/CustomCheckExample';
+import CustomCheckExampleSource from '!!raw-loader!@site/../examples/CustomCheckExample.tsx';
+
+# File tree
+
+`CustomCheckComponent` replaces each checkbox with a folder or file icon, and `CustomExpandIconComponent` hides the arrow. Click a folder to open it, and click a file to select it. Selected files turn blue, and folders with some selected files turn orange.
+
+<LiveExample source={CustomCheckExampleSource} title='CustomCheckExample.tsx'>
+  <CustomCheckExample />
+</LiveExample>
+
+The custom check component receives `checked` (`true`, `false` or `null` for mixed), `expanded` and `disabled`, so it can show any state. Keyboard users can still select files with <kbd>Space</kbd>, because the tree item, not the icon, holds the checked state.

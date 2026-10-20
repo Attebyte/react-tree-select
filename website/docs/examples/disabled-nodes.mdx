@@ -1,0 +1,19 @@
+---
+title: Disabled nodes
+description: A React checkbox tree with disabled nodes, showing how a parent becomes indeterminate when a disabled child can't be checked.
+keywords: [react tree disabled node, react checkbox tree disabled, indeterminate parent disabled child]
+---
+
+import LiveExample from '@site/src/components/LiveExample';
+import DisabledNodesExample from '@site/../examples/DisabledNodesExample';
+import DisabledNodesExampleSource from '!!raw-loader!@site/../examples/DisabledNodesExample.tsx';
+
+# Disabled nodes
+
+`Child 1` is disabled, which also disables its children. Check `Root 1`: everything that can be checked is, but `Root 1` shows as mixed because the disabled branch is still unchecked. Click `Root 1` again to uncheck everything that can change.
+
+<LiveExample source={DisabledNodesExampleSource} title='DisabledNodesExample.tsx'>
+  <DisabledNodesExample />
+</LiveExample>
+
+See [Selection](../selection.mdx#disabled-nodes) for the full rules.

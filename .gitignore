@@ -27,3 +27,6 @@ dist-ssr
 .firebase
 .wrangler
 .dev.vars
+storybook-static
+*storybook.log
+*.tsbuildinfo

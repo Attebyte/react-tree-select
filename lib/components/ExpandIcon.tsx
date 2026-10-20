@@ -24,20 +24,25 @@ const ExpandIcon = <T,>(props: ExpandIconProps<T>) => {
         standardComponentProps,
         expanded,
         show,
+        rotated,
         ...rest
     } = props;
 
-    if (!props.show)
+    if (!show)
         return null;
 
+    // Decorative: the tree item exposes the expanded state through aria-expanded
     return (
         <span
+            aria-hidden={true}
             {...rest}
-            className={cn(iconVariants({ rotated: props.expanded === true }), props.className)}
+            className={cn(iconVariants({ rotated: rotated ?? expanded === true }), props.className)}
         >
             &#x25B2;
         </span>
     );
 };
 
-export default React.memo(ExpandIcon) as typeof ExpandIcon;
+const MemoExpandIcon = React.memo(ExpandIcon) as typeof ExpandIcon;
+
+export default MemoExpandIcon;

@@ -1,0 +1,74 @@
+---
+title: Customization
+description: Style React Tree Select with class names and Tailwind CSS, or replace the node, label, checkbox and expand icon with your own React components.
+keywords: [custom react tree component, react tree tailwind, react tree custom node, react tree custom icon]
+---
+
+# Customization
+
+TreeSelect is made of four parts, and each one can be styled or replaced:
+
+| Part | Renders | Style with | Replace with |
+| --- | --- | --- | --- |
+| `TreeNode` | The container for a node and its nested nodes | `nodeClassName`, `nodeStyle` | `CustomNodeComponent` |
+| `NodeCheck` | The checkbox | `inputClassName`, `inputStyle` | `CustomCheckComponent` |
+| `NodeLabel` | The label text | `labelClassName`, `labelStyle` | `CustomLabelComponent` |
+| `ExpandIcon` | The arrow next to nodes with children | `iconClassName`, `iconStyle` | `CustomExpandIconComponent` |
+
+`className` and `style` on `TreeSelect` itself apply to the root element.
+
+## Class names
+
+The default styles are written with [Tailwind CSS](https://tailwindcss.com) utilities, and your class names are merged with them using [tailwind-merge](https://github.com/dcastil/tailwind-merge). When you pass a Tailwind class that conflicts with a default, such as `ps-6` instead of the default `ps-3`, yours replaces it. You don't need Tailwind to use the component; any class names work, and the defaults come from the bundled stylesheet.
+
+See the [styling example](./examples/styling.mdx).
+
+## Replacing parts
+
+Custom components receive the same props as the default they replace, so you can wrap a default part or build your own. Every part receives `standardComponentProps`, which contains the `node` being rendered and the property names you passed to TreeSelect.
+
+- **Expand icon**: see the [custom icon example](./examples/custom-icon.mdx).
+- **Checkbox**: see the [file tree example](./examples/file-tree.mdx), which replaces checkboxes with folder and file icons.
+- **Node**: see the [comment thread example](./examples/comment-thread.mdx).
+
+The default parts are exported (`TreeNode`, `NodeCheck`, `NodeLabel`, `ExpandIcon`) so a custom component can render them:
+
+```tsx
+import TreeSelect, { NodeLabel, NodeLabelProps } from '@attebyte/react-tree-select';
+
+const LabelWithCount = (props: NodeLabelProps<ExampleNode>) => (
+  <>
+    <NodeLabel {...props} />
+    <span className='ms-2 text-sm opacity-60'>{props.standardComponentProps.node.children?.length}</span>
+  </>
+);
+```
+
+## Custom nodes
+
+A custom node replaces the whole row and controls where nested nodes go. To keep keyboard navigation and screen reader support, it should:
+
+1. Spread `treeItemProps` onto its root element. These are the `role`, `tabIndex` and `aria-*` attributes plus a ref that keyboard navigation uses to move focus.
+2. Render `children` (the nested nodes, provided while the node is expanded), ideally inside an element with `role='group'`.
+3. Use `expanded` and `onExpandedChange` to show and change whether the node is expanded, and `onChange(node, value)` to change selection.
+
+```tsx
+import { TreeNodeProps } from '@attebyte/react-tree-select';
+
+const MyNode = (props: TreeNodeProps<ExampleNode>) => {
+  const { standardComponentProps, treeItemProps, expanded, onExpandedChange, children } = props;
+
+  return (
+    <div {...treeItemProps}>
+      <button onClick={() => onExpandedChange?.(!expanded)}>
+        {standardComponentProps.node.label}
+      </button>
+      {children && <div role='group'>{children}</div>}
+    </div>
+  );
+};
+```
+
+If you spread the remaining props onto a DOM element, destructure `treeItemProps`, `expanded`, `onExpandedChange` and `children` first, as above, so they aren't passed to the DOM.
+
+A custom node that ignores `treeItemProps` and `children` and renders its own nested nodes still works, but those nodes aren't part of the tree's keyboard navigation. In that case the default checkbox stays a normal, focusable checkbox.

@@ -1,0 +1,28 @@
+/* Tailwind for the examples' own classes. No Preflight, so Docusaurus' Infima styles stay intact. */
+@import "tailwindcss/theme.css" layer(theme);
+@import "tailwindcss/utilities.css" source(none);
+@source "../../../examples";
+@source "../";
+
+:root {
+  --ifm-color-primary: #4f46e5;
+  --ifm-color-primary-dark: #4338ca;
+  --ifm-color-primary-darker: #3f37c9;
+  --ifm-color-primary-darkest: #3730a3;
+  --ifm-color-primary-light: #6366f1;
+  --ifm-color-primary-lighter: #7376f3;
+  --ifm-color-primary-lightest: #818cf8;
+  --ifm-code-font-size: 95%;
+  --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.1);
+}
+
+[data-theme='dark'] {
+  --ifm-color-primary: #818cf8;
+  --ifm-color-primary-dark: #6366f1;
+  --ifm-color-primary-darker: #5b5ff0;
+  --ifm-color-primary-darkest: #4f46e5;
+  --ifm-color-primary-light: #a5b4fc;
+  --ifm-color-primary-lighter: #b4c0fd;
+  --ifm-color-primary-lightest: #c7d2fe;
+  --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.3);
+}

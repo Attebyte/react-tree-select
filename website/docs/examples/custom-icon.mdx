@@ -1,0 +1,19 @@
+---
+title: Custom expand icon
+description: Replace the expand and collapse arrow in a React tree select with your own icon component.
+keywords: [react tree custom icon, react tree expand collapse icon, plus minus tree react]
+---
+
+import LiveExample from '@site/src/components/LiveExample';
+import CustomIconExample from '@site/../examples/CustomIconExample';
+import CustomIconExampleSource from '!!raw-loader!@site/../examples/CustomIconExample.tsx';
+
+# Custom expand icon
+
+`CustomExpandIconComponent` replaces the arrow with a plus that turns into a minus. The icon receives `show` (true for nodes with children) and `expanded`.
+
+<LiveExample source={CustomIconExampleSource} title='CustomIconExample.tsx'>
+  <CustomIconExample />
+</LiveExample>
+
+Mark decorative icons with `aria-hidden`: the tree item already tells screen readers whether it is expanded.

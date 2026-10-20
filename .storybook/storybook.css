@@ -1,0 +1,4 @@
+/* Tailwind for the examples' own classes, as a consumer app using Tailwind would have it */
+@import "tailwindcss" source(none);
+@source "../examples";
+@source "../stories";

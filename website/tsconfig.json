@@ -1,0 +1,12 @@
+{
+  "extends": "@docusaurus/tsconfig",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "strict": true,
+    "paths": {
+      "@site/*": ["./*"],
+      "@attebyte/react-tree-select": ["../lib/main.ts"]
+    }
+  },
+  "exclude": [".docusaurus", "build"]
+}

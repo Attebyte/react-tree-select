@@ -1,0 +1,19 @@
+---
+title: Styling with Tailwind CSS
+description: Style a React tree select with Tailwind CSS class names for the root, labels, checkboxes and expand icons.
+keywords: [react tree tailwind, tailwind tree view, style react checkbox tree]
+---
+
+import LiveExample from '@site/src/components/LiveExample';
+import StylingExample from '@site/../examples/StylingExample';
+import StylingExampleSource from '!!raw-loader!@site/../examples/StylingExample.tsx';
+
+# Styling with Tailwind CSS
+
+The default parts are restyled with class names. Classes that conflict with a default (such as the checkbox size) replace it, because class names are merged with [tailwind-merge](https://github.com/dcastil/tailwind-merge).
+
+<LiveExample source={StylingExampleSource} title='StylingExample.tsx'>
+  <StylingExample />
+</LiveExample>
+
+The checkbox is drawn with a `::after` pseudo-element, so `after:` variants (like `after:text-2xl`) size the check mark. See [Customization](../customization.mdx) for every styling prop.

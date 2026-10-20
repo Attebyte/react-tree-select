@@ -1,0 +1,111 @@
+---
+title: Getting started
+description: Install @attebyte/react-tree-select and render an accessible checkbox tree from your own hierarchical data in a few lines of React.
+keywords: [react tree select install, react checkbox tree tutorial, tree select react example]
+---
+
+import LiveExample from '@site/src/components/LiveExample';
+import BasicExample from '@site/../examples/BasicExample';
+import BasicExampleSource from '!!raw-loader!@site/../examples/BasicExample.tsx';
+
+# Getting started
+
+## Installation
+
+Install the package with the package manager of your choice. React 18 or 19 is required.
+
+```bash
+npm install @attebyte/react-tree-select
+```
+
+```bash
+yarn add @attebyte/react-tree-select
+```
+
+```bash
+pnpm add @attebyte/react-tree-select
+```
+
+## Import the styles
+
+Import the stylesheet once, for example in your app's entry file. It only styles the tree itself and does not reset any global styles.
+
+```tsx
+import '@attebyte/react-tree-select/style.css';
+```
+
+## Render a tree
+
+Pass your tree-shaped data to `TreeSelect` along with the names of the properties that hold each node's unique ID, label and children. Add `valueProperty` to make the nodes selectable: TreeSelect stores each node's checked state in that property.
+
+<LiveExample source={BasicExampleSource} title='BasicExample.tsx'>
+  <BasicExample />
+</LiveExample>
+
+Your data can have any shape. The example uses this type:
+
+```ts
+interface ExampleNode {
+  label: string;
+  value: number;
+  included?: boolean | null; // true = checked, false or undefined = unchecked, null = mixed
+  children?: ExampleNode[];
+}
+
+const exampleData: ExampleNode[] = [
+  {
+    label: 'Root 1',
+    value: 1,
+    children: [
+      {
+        label: 'Child 1',
+        value: 2,
+        children: [
+          { label: 'Grandchild 1', value: 3 },
+          { label: 'Grandchild 2', value: 4 }
+        ]
+      },
+      { label: 'Child 2', value: 5 }
+    ]
+  },
+  {
+    label: 'Root 2',
+    value: 6,
+    children: [
+      { label: 'Child 3', value: 7 },
+      { label: 'Child 4', value: 8 }
+    ]
+  }
+];
+```
+
+:::tip
+Give every tree an accessible name with `aria-label` or `aria-labelledby`, as in the example above.
+:::
+
+## Read the selection
+
+`defaultData` makes the tree **uncontrolled**: it keeps track of selections itself and calls `onChange` with the updated tree each time something is checked. To keep the selection in your own state, use `data` instead; see [Controlled usage](./controlled.mdx).
+
+To turn a tree into a list of selected IDs, use [`getSelectedIDs`](./selection.mdx#reading-the-selection):
+
+```tsx
+import TreeSelect, { getSelectedIDs } from '@attebyte/react-tree-select';
+
+<TreeSelect
+  defaultData={exampleData}
+  uniqueIDProperty='value'
+  labelProperty='label'
+  childrenProperty='children'
+  valueProperty='included'
+  onChange={tree => {
+    const ids = getSelectedIDs(tree, {
+      uniqueIDProperty: 'value',
+      childrenProperty: 'children',
+      valueProperty: 'included',
+      mode: 'leaves'
+    });
+    console.log(ids); // e.g. [3, 4, 7]
+  }}
+/>
+```

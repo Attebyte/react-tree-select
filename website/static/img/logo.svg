@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none" role="img" aria-label="React Tree Select logo">
+  <rect width="64" height="64" rx="14" fill="#4f46e5"/>
+  <!-- Tree lines from the parent to its two children -->
+  <path d="M17 20v30M17 34h14M17 50h11.5" stroke="#c7d2fe" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- Parent: mixed -->
+  <rect x="10" y="10" width="14" height="14" rx="3" fill="#fff"/>
+  <rect x="14" y="14" width="6" height="6" rx="1.5" fill="#4f46e5"/>
+  <!-- First child: checked -->
+  <rect x="29" y="28" width="12" height="12" rx="2.5" fill="#fff"/>
+  <path d="M32 34.25l2 2 4-4.5" stroke="#4f46e5" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- Second child: unchecked -->
+  <rect x="30" y="45" width="10" height="10" rx="2" stroke="#fff" stroke-width="2"/>
+  <!-- Labels -->
+  <path d="M30 17h24M46 34h9M46 50h9" stroke="#c7d2fe" stroke-width="3" stroke-linecap="round"/>
+</svg>

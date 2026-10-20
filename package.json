@@ -1,66 +1,129 @@
 {
   "name": "@attebyte/react-tree-select",
-  "version": "1.0.1",
-  "description": "A tree select component for React",
+  "version": "2.0.0",
+  "description": "Accessible React tree select and checkbox tree component with tri-state (indeterminate) selection, keyboard navigation, TypeScript generics and customizable, Tailwind-friendly styling.",
+  "keywords": [
+    "react",
+    "react-component",
+    "tree",
+    "tree-select",
+    "treeselect",
+    "tree-view",
+    "treeview",
+    "checkbox-tree",
+    "checkbox",
+    "tree-checkbox",
+    "multi-select",
+    "indeterminate",
+    "tri-state",
+    "hierarchy",
+    "nested",
+    "accessible",
+    "a11y",
+    "aria",
+    "wai-aria",
+    "keyboard-navigation",
+    "typescript",
+    "tailwind",
+    "tailwindcss",
+    "file-tree",
+    "folder-tree"
+  ],
+  "homepage": "https://rts.attebyte.io",
+  "bugs": {
+    "url": "https://github.com/Attebyte/react-tree-select/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Attebyte/react-tree-select.git"
+  },
+  "license": "MIT",
+  "author": "Tristan Attebery (https://attebyte.io)",
   "type": "module",
   "main": "dist/main.js",
   "types": "dist/main.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/main.d.ts",
+      "import": "./dist/main.js",
+      "default": "./dist/main.js"
+    },
+    "./style.css": {
+      "types": "./dist/style.css.d.ts",
+      "default": "./dist/style.css"
+    },
+    "./dist/style.css": {
+      "types": "./dist/style.css.d.ts",
+      "default": "./dist/style.css"
+    },
+    "./package.json": "./package.json"
+  },
+  "sideEffects": [
+    "**/*.css"
+  ],
   "files": [
     "dist"
   ],
-  "keywords": [
-    "react",
-    "tree",
-    "select",
-    "component"
-  ],
-  "author": "Tristan Attebery",
-  "license": "GPL-3.0-only",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/Attebyte/react-tree-select"
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/",
+    "access": "public"
   },
   "engines": {
     "node": ">=20"
   },
   "scripts": {
-    "dev": "vite",
+    "dev": "storybook dev -p 6006",
     "build": "tsc --p ./tsconfig.build.json && vite build",
-    "build-site": "tsc && vite build -c vite.site.config.ts",
-    "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
-    "preview": "vite preview",
-    "prepublishOnly": "npm run build && npm run build-site",
-    "test": "vitest"
+    "build-site": "npm run build && npm run build-storybook && npm ci --prefix website && npm run build --prefix website",
+    "lint": "eslint . --report-unused-disable-directives --max-warnings 0",
+    "typecheck": "tsc",
+    "prepublishOnly": "npm run lint && npm run typecheck && npm run test:run && npm run build",
+    "test": "vitest --project unit",
+    "test:run": "vitest run --project unit",
+    "test:storybook": "vitest run --project storybook",
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build -o storybook-static"
   },
   "peerDependencies": {
     "react": "^18.0.0 || ^19.0.0",
     "react-dom": "^18.0.0 || ^19.0.0"
   },
-  "devDependencies": {
-    "@types/node": "^20.11.17",
-    "@types/react": "^19.0.0",
-    "@types/react-dom": "^19.0.0",
-    "@typescript-eslint/eslint-plugin": "^6.21.0",
-    "@typescript-eslint/parser": "^6.21.0",
-    "@vitejs/plugin-react": "^4.2.1",
-    "autoprefixer": "^10.4.17",
-    "eslint": "^8.56.0",
-    "eslint-plugin-react-hooks": "^4.6.0",
-    "eslint-plugin-react-refresh": "^0.4.5",
-    "postcss": "^8.4.35",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "react-icons": "^5.0.1",
-    "react-router-dom": "^6.22.1",
-    "tailwindcss": "^3.4.1",
-    "typescript": "^5.2.2",
-    "vite": "^5.1.0",
-    "vite-plugin-dts": "^3.7.2",
-    "vitest": "^1.3.0"
-  },
   "dependencies": {
-    "class-variance-authority": "^0.7.0",
-    "clsx": "^2.1.0",
-    "tailwind-merge": "^2.2.1"
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "tailwind-merge": "^3.7.0"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@microsoft/api-extractor": "^7.59.4",
+    "@storybook/addon-a11y": "^10.6.3",
+    "@storybook/addon-docs": "^10.6.3",
+    "@storybook/addon-vitest": "^10.6.3",
+    "@storybook/react-vite": "^10.6.3",
+    "@tailwindcss/vite": "^4.3.3",
+    "@testing-library/dom": "^10.4.2",
+    "@testing-library/react": "^16.3.3",
+    "@testing-library/user-event": "^14.6.8",
+    "@types/node": "^24.19.2",
+    "@types/react": "^19.2.0",
+    "@types/react-dom": "^19.2.0",
+    "@vitejs/plugin-react": "^6.1.2",
+    "@vitest/browser-playwright": "^5.0.5",
+    "eslint": "^10.13.0",
+    "eslint-plugin-react-hooks": "^7.1.1",
+    "eslint-plugin-react-refresh": "^0.5.7",
+    "globals": "^17.13.0",
+    "jsdom": "^30.1.3",
+    "playwright": "^1.64.1",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
+    "react-icons": "^5.7.0",
+    "storybook": "^10.6.3",
+    "tailwindcss": "^4.3.3",
+    "typescript": "~6.0.3",
+    "typescript-eslint": "^8.72.0",
+    "vite": "^8.3.4",
+    "vite-plugin-dts": "^5.1.2",
+    "vitest": "^5.0.5"
   }
 }

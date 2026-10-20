@@ -1,0 +1,54 @@
+---
+title: Accessibility
+description: React Tree Select follows the WAI-ARIA tree view pattern with keyboard navigation, a single tab stop, and screen reader support for expanded, checked and indeterminate states.
+keywords: [accessible react tree, aria tree view react, keyboard navigation tree react, a11y checkbox tree]
+---
+
+# Accessibility
+
+TreeSelect implements the [WAI-ARIA tree view pattern](https://www.w3.org/WAI/ARIA/apg/patterns/treeview/).
+
+## Name your tree
+
+Give each tree an accessible name so screen reader users know what it is for:
+
+```tsx
+<TreeSelect aria-label='Product categories' {...props} />
+
+// or point to a visible heading
+<h2 id='categories-heading'>Product categories</h2>
+<TreeSelect aria-labelledby='categories-heading' {...props} />
+```
+
+## Keyboard
+
+The whole tree is a single tab stop. Once it has focus:
+
+| Key | Action |
+| --- | --- |
+| <kbd>↓</kbd> / <kbd>↑</kbd> | Move to the next or previous visible node |
+| <kbd>→</kbd> | Expand a collapsed node, or move to the first child of an expanded node |
+| <kbd>←</kbd> | Collapse an expanded node, or move to the parent node |
+| <kbd>Home</kbd> / <kbd>End</kbd> | Move to the first or last visible node |
+| <kbd>Space</kbd> | Check or uncheck the node |
+| <kbd>Enter</kbd> | Activate the node, the same as clicking its label: expand or collapse a parent, or check or uncheck a leaf |
+
+Keys pressed with <kbd>Alt</kbd>, <kbd>Ctrl</kbd> or <kbd>Meta</kbd> are left to the browser. Disabled nodes can still be focused, but not changed.
+
+TreeSelect remembers the focused node, so tabbing away and back returns to it. If that node is removed or hidden by collapsing its parent, focus moves to a visible node.
+
+## Roles and states
+
+| Element | Role | Attributes |
+| --- | --- | --- |
+| Root | `tree` | `aria-multiselectable` when nodes can be selected |
+| Each node | `treeitem` | `aria-label` (from `labelProperty`), `aria-level`, `aria-setsize`, `aria-posinset`, `aria-expanded` (nodes with children), `aria-checked` (`true`, `false` or `mixed`), `aria-disabled` |
+| Nested nodes | `group` | |
+
+The tree item carries the checked state, so the visual checkbox inside it is hidden from assistive technology and removed from the tab order. Clicking the checkbox moves focus to its tree item. The expand icon is decorative and hidden as well.
+
+A visible focus ring is drawn around the focused node's label. If you replace the label with a custom component, add your own focus style; the tree item is the focused element, so a selector like `[role="treeitem"]:focus-visible > .my-label` works.
+
+## Testing
+
+The component is tested with axe in a real browser as part of the Storybook test suite. If you run axe on your own pages, its `label-content-name-mismatch` rule (WCAG 2.5.3, Label in Name) may flag expanded tree items. The rule compares an element's accessible name with all of the text inside it, and an expanded tree item contains the text of its nested items. Each item's visible label is exactly its accessible name, which is what the success criterion asks for, so this is expected for a nested tree. Our test suite scopes that rule away from tree items.

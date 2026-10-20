@@ -1,0 +1,34 @@
+---
+slug: /
+title: Introduction
+description: React Tree Select is an accessible, customizable tree select and checkbox tree component for React with tri-state selection, keyboard navigation and TypeScript support.
+keywords: [react tree select, react checkbox tree, react tree view, react tree component, indeterminate checkbox]
+---
+
+import LiveExample from '@site/src/components/LiveExample';
+import BasicExample from '@site/../examples/BasicExample';
+
+# React Tree Select
+
+`@attebyte/react-tree-select` is a tree select (also called a checkbox tree) component for React. Give it your hierarchical data and it renders an expandable tree where users can check and uncheck nodes. Parents reflect the state of their children as checked, unchecked or indeterminate.
+
+<LiveExample>
+  <BasicExample />
+</LiveExample>
+
+## Why use it
+
+- **Your data, your shape.** Pass your own objects and name the properties that hold the ID, label, children and checked state. There is no required node format, and TypeScript checks that the property names exist on your type.
+- **Tri-state selection.** Checking a parent checks its descendants. A parent is checked only when everything under it is checked, and indeterminate (mixed) when some of it is. Disabled nodes are respected throughout.
+- **Accessible.** The tree follows the [WAI-ARIA tree view pattern](https://www.w3.org/WAI/ARIA/apg/patterns/treeview/): one tab stop, arrow key navigation, and states announced by screen readers. See [Accessibility](./accessibility.mdx).
+- **Customizable.** Style any part with class names, or replace the node, label, checkbox or expand icon with your own components. See [Customization](./customization.mdx).
+- **Controlled or uncontrolled.** Let the tree manage selection, or own the data in your state. See [Controlled usage](./controlled.mdx).
+- **Fast.** Changes copy only the affected branch, and unchanged nodes skip re-rendering, so [large trees](./examples/large-tree.mdx) stay responsive.
+- **Small.** About 17 KB of JavaScript and 3 KB of CSS, with no global style resets. Supports React 18 and 19 and server-side rendering.
+
+## Next steps
+
+- [Install it and render your first tree](./getting-started.mdx)
+- [Browse the examples](./examples/index.mdx)
+- [Read the API reference](./api.mdx)
+- [Open the Storybook playground](pathname:///storybook/index.html)

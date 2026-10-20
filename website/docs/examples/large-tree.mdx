@@ -1,0 +1,25 @@
+---
+title: Large tree
+description: A controlled React checkbox tree with 21,110 nodes, showing that selection stays fast because only changed nodes re-render.
+keywords: [react large tree performance, react tree thousands of nodes, fast react checkbox tree]
+---
+
+import LiveExample from '@site/src/components/LiveExample';
+import LargeTreeExample from '@site/../examples/LargeTreeExample';
+import LargeTreeExampleSource from '!!raw-loader!@site/../examples/LargeTreeExample.tsx';
+
+# Large tree
+
+This controlled tree has 21,110 nodes: 10 roots, each with 10 children, 100 grandchildren and 2,000 leaves. Check `Item 1` to select its 2,000 leaves at once.
+
+<LiveExample source={LargeTreeExampleSource} title='LargeTreeExample.tsx'>
+  <LargeTreeExample />
+</LiveExample>
+
+## Why it stays fast
+
+- A selection change copies only the changed nodes and their ancestors. Every other node keeps its identity.
+- Nodes are memoized, so unchanged nodes don't re-render, and collapsed branches aren't rendered at all.
+- Expansion and focus state are tracked per node, so expanding one node doesn't re-render the others.
+
+TreeSelect renders every node in an expanded branch. If you need to show tens of thousands of nodes expanded at the same time, consider virtualizing the list.

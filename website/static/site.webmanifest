@@ -1,0 +1,13 @@
+{
+  "name": "React Tree Select",
+  "short_name": "Tree Select",
+  "description": "An accessible, customizable tree select and checkbox tree for React",
+  "start_url": "/",
+  "display": "browser",
+  "theme_color": "#4f46e5",
+  "background_color": "#ffffff",
+  "icons": [
+    { "src": "/img/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "/img/icon-512.png", "sizes": "512x512", "type": "image/png" }
+  ]
+}

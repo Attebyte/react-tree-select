@@ -1,3 +1,15 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+/*
+ * The published stylesheet. Only the utilities the components use are emitted: no Preflight, so importing
+ * it never resets the consumer's global styles, and theme values are inlined rather than declared as
+ * :root variables, so they can't override a consumer's own Tailwind theme.
+ *
+ * Utilities are deliberately not in a cascade layer: layered rules lose to every unlayered rule, so a global
+ * reset such as `* { padding: 0 }` in the consumer's CSS would otherwise remove the tree's indentation.
+ */
+@import "tailwindcss/theme.css" theme(inline reference);
+@import "tailwindcss/utilities.css" source(none);
+
+@source "./components";
+@source not "./**/*.test.tsx";
+/* Words in comments that would otherwise be emitted as global utilities */
+@source not inline("visible hidden ring block flex table contents filter");

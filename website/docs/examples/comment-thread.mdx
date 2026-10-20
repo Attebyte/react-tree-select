@@ -1,0 +1,19 @@
+---
+title: Comment thread
+description: Render nested comments with React Tree Select by replacing the node component, while keeping keyboard navigation.
+keywords: [react nested comments, react comment thread tree, react custom tree node]
+---
+
+import LiveExample from '@site/src/components/LiveExample';
+import CustomNodeExample from '@site/../examples/CustomNodeExample';
+import CustomNodeExampleSource from '!!raw-loader!@site/../examples/CustomNodeExample.tsx';
+
+# Comment thread
+
+`CustomNodeComponent` replaces each node entirely, here with a comment and a button to show its replies. The node spreads `treeItemProps` and renders `children`, so TreeSelect still manages which threads are open, and the thread can be navigated with the arrow keys.
+
+<LiveExample source={CustomNodeExampleSource} title='CustomNodeExample.tsx'>
+  <CustomNodeExample />
+</LiveExample>
+
+This tree has no `valueProperty`, so it is display-only. See [Custom nodes](../customization.mdx#custom-nodes) for what a custom node should render.

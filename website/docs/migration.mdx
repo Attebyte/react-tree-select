@@ -1,0 +1,34 @@
+---
+title: Upgrading from 1.x
+description: Breaking changes and new features in React Tree Select 2.0, and how to upgrade from version 1.x.
+keywords: [react tree select 2.0, react tree select migration, upgrade react tree select]
+---
+
+# Upgrading from 1.x
+
+Version 2.0 is a major release. Most apps only need to check the first two items below.
+
+## Breaking changes
+
+- **Controlled mode is now fully controlled.** When you pass `data`, the tree renders exactly that data, so selections only appear once you pass the tree from `onChange` back in as `data`. In 1.x the tree kept its own copy and updated it even if you ignored `onChange`. If you don't want to manage the state, use `defaultData`.
+- **Parents with disabled children are mixed, not checked.** With chained selection, checking a parent whose disabled child is unchecked now makes the parent mixed (`null`) instead of checked, so its value always reflects its subtree. Clicking it again unchecks its enabled descendants. A parent whose descendants are all disabled is now shown as disabled, since it can never change (in 1.x it could be checked on its own). See [Disabled nodes](./selection.mdx#disabled-nodes).
+- **`onChange` receives a structurally shared tree, and is only called when something changed.** Changed nodes and their ancestors are new objects; every other node is the same object as before. In 1.x every change produced a full deep copy. Your input data is still never modified, so treat the result as immutable.
+- **Nodes no longer contain a `_parentID` property.**
+- **Expansion state is managed by TreeSelect.** `TreeNode` now receives `expanded`, `onExpandedChange`, `treeItemProps` and its nested nodes as `children`, instead of keeping its own state and rendering its children itself. A 1.x-style custom node that renders its own children still works, but isn't part of keyboard navigation. If it spreads its remaining props onto a DOM element, destructure the new props first. See [Custom nodes](./customization.mdx#custom-nodes).
+- **Changing `defaultExpanded` after the first render** now expands or collapses every node. In 1.x it only affected nodes rendered afterward.
+- **New DOM structure and ARIA roles.** The root has `role="tree"`, each node has `role="treeitem"`, and nested nodes are wrapped in an element with `role="group"`. The label no longer has `role="button"`, the checkbox is removed from the tab order, and the expand icon is hidden from assistive technology. Update CSS selectors that relied on nested nodes being direct children of their parent.
+- **The stylesheet no longer resets global styles.** 1.x shipped Tailwind's Preflight reset, which changed styles across the whole page. If your app relied on it, add a reset yourself (for example Tailwind's `@import "tailwindcss"`).
+- **Styles are built with Tailwind CSS 4.** The default styles use modern CSS (such as `@property` and individual transform properties) and need Safari 16.4+, Chrome 111+ or Firefox 128+. Class name merging uses tailwind-merge 3, which understands Tailwind 4 class names; if you style the tree with Tailwind 3 classes, overrides with renamed utilities (such as `rounded-sm`, `shadow-sm` or `outline-none`) may not replace the defaults.
+- **Package exports are restricted.** Only the main entry point and the stylesheet can be imported. Import styles from `@attebyte/react-tree-select/style.css`; the old `dist/style.css` path still works.
+- **License changed from GPL-3.0 to MIT.**
+
+## New features
+
+- [Keyboard navigation and screen reader support](./accessibility.mdx) following the WAI-ARIA tree view pattern.
+- [`getSelectedIDs` and `getSelectedNodes`](./selection.mdx#reading-the-selection) helpers.
+- Expansion state survives collapsing and reopening a parent.
+- Nodes can contain values that can't be cloned, such as functions or class instances.
+- Controlled data renders on the first render and on the server.
+- Much faster updates on large trees; see the [large tree example](./examples/large-tree.mdx).
+- A smaller package: the bundle no longer includes its dependencies (69 KB to 17 KB of JavaScript), and the stylesheet only contains the component's own styles (14 KB to 3 KB).
+- Type declarations work with `"moduleResolution": "node16"` and `"nodenext"`, and the package can be loaded with `require()` in Node.js and Jest.

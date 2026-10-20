@@ -1,0 +1,27 @@
+.example {
+  border: 1px solid var(--ifm-color-emphasis-300);
+  border-radius: var(--ifm-global-radius);
+  margin-bottom: var(--ifm-leading);
+  overflow: hidden;
+}
+
+.preview {
+  padding: 1.5rem;
+  background: var(--ifm-background-surface-color);
+}
+
+.source {
+  border-top: 1px solid var(--ifm-color-emphasis-300);
+  margin: 0;
+}
+
+.source > summary {
+  cursor: pointer;
+  padding: 0.5rem 1rem;
+  font-weight: var(--ifm-font-weight-semibold);
+}
+
+.source :global(.theme-code-block) {
+  margin-bottom: 0;
+  border-radius: 0;
+}
