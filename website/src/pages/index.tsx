@@ -31,7 +31,7 @@ const features = [
   },
   {
     title: 'Customize every part',
-    description: 'Style it with class names (merged with tailwind-merge), or replace the node, label, checkbox or expand icon with your own React components.'
+    description: 'Style it with class names, which always override the defaults, or replace the node, label, checkbox or expand icon with your own React components.'
   },
   {
     title: 'Fast with large trees',

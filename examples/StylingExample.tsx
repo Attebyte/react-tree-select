@@ -1,7 +1,7 @@
 import TreeSelect from '@attebyte/react-tree-select';
 import { exampleData, ExampleNode } from './data';
 
-// Class names are merged with the defaults by tailwind-merge, so they override conflicting defaults
+// Class names override the defaults, which live in a lower-priority cascade layer
 export default function StylingExample() {
   return (
     <TreeSelect<ExampleNode>

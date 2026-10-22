@@ -1,6 +1,6 @@
 {
   "name": "@attebyte/react-tree-select",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "Accessible React tree select and checkbox tree component with tri-state (indeterminate) selection, keyboard navigation, TypeScript generics and customizable, Tailwind-friendly styling.",
   "keywords": [
     "react",

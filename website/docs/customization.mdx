@@ -19,7 +19,17 @@ TreeSelect is made of four parts, and each one can be styled or replaced:
 
 ## Class names
 
-The default styles are written with [Tailwind CSS](https://tailwindcss.com) utilities, and your class names are merged with them using [tailwind-merge](https://github.com/dcastil/tailwind-merge). When you pass a Tailwind class that conflicts with a default, such as `ps-6` instead of the default `ps-3`, yours replaces it. You don't need Tailwind to use the component; any class names work, and the defaults come from the bundled stylesheet.
+Pass class names to any part and they override the defaults. For example, `labelClassName='ps-6'` replaces the default indentation of the label. You don't need Tailwind to use the component: any class names or `style` objects work, and the defaults come from the bundled stylesheet.
+
+## How the default styles are scoped
+
+The bundled stylesheet is built with [Tailwind CSS](https://tailwindcss.com), but it can't affect the rest of your app:
+
+- Every class is prefixed with `rts:` (for example `rts:ps-3`), so no default rule can match an element outside the tree.
+- The rules live in the `components` [cascade layer](https://developer.mozilla.org/en-US/docs/Web/CSS/@layer). Rules in a layer lose to Tailwind's `utilities` layer and to any CSS that isn't in a layer, so your classes and stylesheets override the defaults regardless of specificity or load order.
+- It contains no global reset (Preflight) and declares no theme variables.
+
+Because the defaults have low priority, unlayered global resets in your app, such as `* { margin: 0; padding: 0 }`, also override them and can remove the tree's indentation. Scope such resets, or move them into a low-priority layer such as `@layer base`.
 
 See the [styling example](./examples/styling.mdx).
 

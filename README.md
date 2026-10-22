@@ -17,7 +17,7 @@
 - **Tri-state selection.** Checking a parent checks its descendants, and parents show checked, unchecked or indeterminate based on what is selected beneath them. Disabled nodes are respected. Turn it off for independent selection.
 - **Accessible.** Follows the [WAI-ARIA tree view pattern](https://www.w3.org/WAI/ARIA/apg/patterns/treeview/): a single tab stop, arrow key navigation, and screen reader support for expanded, checked and mixed states. Tested with axe.
 - **Works with your data.** Pass your own tree-shaped objects and name the properties that hold the ID, label, children and checked state. TypeScript checks the property names against your node type.
-- **Customizable.** Style every part with class names (merged with tailwind-merge), or replace the node, label, checkbox or expand icon with your own components, for example to build a file tree or a comment thread.
+- **Customizable.** Style every part with class names, which always override the defaults, or replace the node, label, checkbox or expand icon with your own components, for example to build a file tree or a comment thread.
 - **Controlled or uncontrolled**, with helpers to read the selected IDs.
 - **Fast with large trees.** Changes copy only the affected branch and unchanged nodes skip re-rendering.
 - **Small.** About 17 KB of JavaScript and 3 KB of CSS, with no global style resets. Supports React 18 and 19 and server-side rendering.
@@ -144,6 +144,8 @@ The most commonly used props. See the [API reference](https://rts.attebyte.io/do
 
 ## Customization
 
+The default styles only apply to the tree's own elements: every class is prefixed with `rts:`, and the rules live in the `components` cascade layer. Your own classes and CSS therefore always override them, whether you use Tailwind 4, Tailwind 3 or plain CSS. One consequence: unlayered global resets in your app (such as `* { padding: 0 }`) also override them, so scope those resets or put them in a lower layer.
+
 TreeSelect is made of four replaceable parts:
 
 - `TreeNode`: the container for a node and its nested nodes
@@ -195,9 +197,13 @@ Version 2.0 contains breaking changes:
 - **Changing `defaultExpanded` after the first render** now expands or collapses every node. Previously it only affected nodes rendered afterward.
 - **New DOM structure and ARIA roles.** The root element has `role="tree"`, each node has `role="treeitem"`, and nested nodes are wrapped in a `role="group"` element. The label no longer has `role="button"`, the checkbox is removed from the tab order (the tree item carries its checked state), and the expand icon is hidden from assistive technology. Update any CSS selectors that relied on child nodes being direct children of their parent node.
 - **The stylesheet no longer resets global styles.** Version 1.x shipped Tailwind's Preflight reset, which changed the styles of the entire page. If your app relied on that reset, include one yourself (for example, Tailwind's `@import "tailwindcss"`).
-- **Styles are built with Tailwind CSS 4.** The default styles need Safari 16.4+, Chrome 111+ or Firefox 128+. Class names are merged with tailwind-merge 3, which understands Tailwind 4 class names; if you style the tree with Tailwind 3, overrides that use utilities renamed in Tailwind 4 (such as `rounded-sm` or `outline-none`) may not replace the defaults.
+- **Styles are built with Tailwind CSS 4.** The default styles need Safari 16.4+, Chrome 111+ or Firefox 128+.
 - **Package exports are restricted.** The package now defines `exports`, so only the main entry point and the stylesheet can be imported. Import styles from `@attebyte/react-tree-select/style.css`. The old `@attebyte/react-tree-select/dist/style.css` path still works.
 - **The license changed from GPL-3.0 to MIT.**
+
+### 2.0.1
+
+- The stylesheet no longer affects elements outside the tree. In 2.0.0 its utility classes (such as `basis-full`) were unlayered and unprefixed, so they matched and overrode identically named classes in the consuming app, including Tailwind 4 responsive variants. Classes are now prefixed with `rts:` and live in the `components` cascade layer. If you worked around this by importing the stylesheet with `layer(components)`, you can keep or remove that.
 
 ### Fixes and improvements
 

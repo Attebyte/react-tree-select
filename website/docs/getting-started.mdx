@@ -28,7 +28,7 @@ pnpm add @attebyte/react-tree-select
 
 ## Import the styles
 
-Import the stylesheet once, for example in your app's entry file. It only styles the tree itself and does not reset any global styles.
+Import the stylesheet once, for example in your app's entry file. It only styles the tree itself, never resets global styles, and your own classes and CSS always take priority over it (see [how the default styles are scoped](./customization.mdx#how-the-default-styles-are-scoped)).
 
 ```tsx
 import '@attebyte/react-tree-select/style.css';

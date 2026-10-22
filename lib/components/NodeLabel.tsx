@@ -19,15 +19,15 @@ interface Props<T> {
 
 // The tree item itself takes focus; the focus ring is drawn on its label so it outlines one row, not the whole subtree
 const labelVariants = cva(`
-    ps-3 rounded-xs hover:cursor-pointer hover:opacity-75
-    [:focus-visible>&]:outline [:focus-visible>&]:outline-2 [:focus-visible>&]:outline-offset-2
+    rts:ps-3 rts:rounded-xs rts:hover:cursor-pointer rts:hover:opacity-75
+    rts:[:focus-visible>&]:outline rts:[:focus-visible>&]:outline-2 rts:[:focus-visible>&]:outline-offset-2
 `, {
     variants: {
         disabled: {
-            true: "opacity-60 hover:cursor-default hover:opacity-60"
+            true: "rts:opacity-60 rts:hover:cursor-default rts:hover:opacity-60"
         },
         expandEnabled: {
-            true: "hover:opacity-100 hover:cursor-pointer"
+            true: "rts:hover:opacity-100 rts:hover:cursor-pointer"
         }
     }
 });

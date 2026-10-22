@@ -18,9 +18,13 @@ Version 2.0 is a major release. Most apps only need to check the first two items
 - **Changing `defaultExpanded` after the first render** now expands or collapses every node. In 1.x it only affected nodes rendered afterward.
 - **New DOM structure and ARIA roles.** The root has `role="tree"`, each node has `role="treeitem"`, and nested nodes are wrapped in an element with `role="group"`. The label no longer has `role="button"`, the checkbox is removed from the tab order, and the expand icon is hidden from assistive technology. Update CSS selectors that relied on nested nodes being direct children of their parent.
 - **The stylesheet no longer resets global styles.** 1.x shipped Tailwind's Preflight reset, which changed styles across the whole page. If your app relied on it, add a reset yourself (for example Tailwind's `@import "tailwindcss"`).
-- **Styles are built with Tailwind CSS 4.** The default styles use modern CSS (such as `@property` and individual transform properties) and need Safari 16.4+, Chrome 111+ or Firefox 128+. Class name merging uses tailwind-merge 3, which understands Tailwind 4 class names; if you style the tree with Tailwind 3 classes, overrides with renamed utilities (such as `rounded-sm`, `shadow-sm` or `outline-none`) may not replace the defaults.
+- **Styles are built with Tailwind CSS 4.** The default styles use modern CSS (such as `@property` and individual transform properties) and need Safari 16.4+, Chrome 111+ or Firefox 128+.
 - **Package exports are restricted.** Only the main entry point and the stylesheet can be imported. Import styles from `@attebyte/react-tree-select/style.css`; the old `dist/style.css` path still works.
 - **License changed from GPL-3.0 to MIT.**
+
+## 2.0.1
+
+- The stylesheet no longer affects elements outside the tree. In 2.0.0 its utility classes (such as `basis-full`) were unlayered and unprefixed, so they matched and overrode identically named classes in the consuming app, including Tailwind 4 responsive variants. Classes are now prefixed with `rts:` and live in the `components` cascade layer. See [Customization](./customization.mdx#how-the-default-styles-are-scoped).
 
 ## New features
 

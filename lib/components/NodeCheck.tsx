@@ -15,14 +15,14 @@ interface Props<T> {
 
 // font:inherit sizes the 1em box from the surrounding text rather than the browser's control font
 const checkVariants = cva(`
-    appearance-none box-border m-0 [font:inherit] inline-block align-text-bottom text-current relative cursor-pointer
-    w-[1em] h-[1em] border border-solid border-current rounded-xs
-    checked:after:content-["✓"] after:text-sm after:font-bold after:flex after:justify-center after:align-middle after:-m-[.2rem]
-    disabled:cursor-default disabled:bg-gray-300 disabled:border-gray-300 disabled:text-gray-500
+    rts:appearance-none rts:box-border rts:m-0 rts:[font:inherit] rts:inline-block rts:align-text-bottom rts:text-current rts:relative rts:cursor-pointer
+    rts:w-[1em] rts:h-[1em] rts:border rts:border-solid rts:border-current rts:rounded-xs
+    rts:checked:after:content-["✓"] rts:after:text-sm rts:after:font-bold rts:after:flex rts:after:justify-center rts:after:align-middle rts:after:-m-[.2rem]
+    rts:disabled:cursor-default rts:disabled:bg-gray-300 rts:disabled:border-gray-300 rts:disabled:text-gray-500
 `, {
     variants: {
         mixed: {
-            true: "after:content-['■']"
+            true: "rts:after:content-['■']"
         }
     }
 });

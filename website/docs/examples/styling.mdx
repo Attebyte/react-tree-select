@@ -10,7 +10,7 @@ import StylingExampleSource from '!!raw-loader!@site/../examples/StylingExample.
 
 # Styling with Tailwind CSS
 
-The default parts are restyled with class names. Classes that conflict with a default (such as the checkbox size) replace it, because class names are merged with [tailwind-merge](https://github.com/dcastil/tailwind-merge).
+The default parts are restyled with class names. Classes that conflict with a default (such as the checkbox size) win, because the default styles are in a lower-priority [cascade layer](../customization.mdx#how-the-default-styles-are-scoped).
 
 <LiveExample source={StylingExampleSource} title='StylingExample.tsx'>
   <StylingExample />

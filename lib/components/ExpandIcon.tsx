@@ -9,10 +9,10 @@ interface Props<T> {
     show: boolean;
 }
 
-const iconVariants = cva(`inline-block text-[.8em] ms-3 transition-transform duration-200`, {
+const iconVariants = cva(`rts:inline-block rts:text-[.8em] rts:ms-3 rts:transition-transform rts:duration-200`, {
     variants: {
         rotated: {
-            true: "rotate-180"
+            true: "rts:rotate-180"
         }
     }
 });

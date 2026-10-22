@@ -435,8 +435,8 @@ describe('customization', () => {
 
     expect(item('Root 1').className).toContain('my-node');
     expect(label('Root 1').className).toContain('my-label');
-    // tailwind-merge lets consumer classes override the defaults
-    expect(label('Root 1').className).not.toMatch(/\bps-3\b/);
+    // Consumer classes are kept as given; they override the rts:-prefixed defaults through the cascade layer
+    expect(label('Root 1').className.split(' ')).toEqual(expect.arrayContaining(['ps-6', 'rts:ps-3']));
     expect(label('Root 1').style.color).toBe('red');
     expect(checkbox('Root 1').className).toContain('my-input');
     expect(label('Root 1').querySelector('[aria-hidden="true"]')?.className).toContain('my-icon');
@@ -670,5 +670,14 @@ describe('round 2 review fixes', () => {
     const data = [{ id: 1, name: <em>Fancy</em> }];
     render(<TreeSelect data={data} uniqueIDProperty='id' labelProperty='name' childrenProperty={'kids' as 'id'} />);
     expect(screen.getByRole('treeitem').hasAttribute('aria-label')).toBe(false);
+  });
+});
+
+describe('stylesheet isolation', () => {
+  test('every default class is prefixed so it cannot match elements outside the tree', () => {
+    const { container } = renderTree({ defaultExpanded: true });
+    const classes = [...container.querySelectorAll('[class]')].flatMap(element => [...element.classList]);
+    expect(classes.length).toBeGreaterThan(0);
+    expect(classes.filter(name => !name.startsWith('rts:'))).toEqual([]);
   });
 });

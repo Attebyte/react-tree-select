@@ -24,7 +24,7 @@ Yes. Import `@attebyte/react-tree-select/style.css` for the default styles, and 
 
 ## Does importing the stylesheet affect the rest of my app?
 
-No. The stylesheet only contains the classes the component uses. It has no global resets and doesn't declare theme variables that could override your own Tailwind theme.
+No. Every class in it is prefixed with `rts:`, so it only matches the tree's own elements, and its rules are in the `components` cascade layer, so your own styles take priority. It has no global resets and doesn't declare theme variables that could override your own Tailwind theme. (Version 2.0.0 had a bug where its utility classes could override identically named classes in your app; upgrade to 2.0.1 or later.)
 
 ## Does it support server-side rendering?
 

@@ -39,10 +39,10 @@ interface Props<T> {
   onExpandedChange?: (expanded: boolean) => void;
 }
 
-const nodeVariants = cva("outline-hidden", {
+const nodeVariants = cva("rts:outline-hidden", {
   variants: {
       nested: {
-          true: "ps-3"
+          true: "rts:ps-3"
       }
   }
 });
@@ -129,7 +129,7 @@ const TreeNode = <T,>(props: TreeNodeProps<T>) => {
         onClick={handleLabelClick}
       />
       {children && (
-        <div role='group' className='basis-full'>
+        <div role='group' className='rts:basis-full'>
           {children}
         </div>
       )}
