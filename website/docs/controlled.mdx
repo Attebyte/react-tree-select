@@ -36,9 +36,26 @@ If you pass `data` but don't update it from `onChange`, checking a node has no v
 
 Treat the result as immutable. If you need to change it, copy the nodes you modify, as you would with any React state.
 
+## A single root node
+
+If your tree has one root, pass the node itself instead of wrapping it in an array. `onChange` reports a single node too, so the state can stay a single node:
+
+```tsx
+const [root, setRoot] = useState<Category>(rootCategory);
+
+<TreeSelect
+  data={root}
+  onChange={setRoot}
+  uniqueIDProperty='value'
+  labelProperty='label'
+  childrenProperty='children'
+  valueProperty='included'
+/>
+```
+
 ## Loading data later
 
-`data` can start as `undefined` (for example while a request is in flight). TreeSelect renders nothing until it receives an array.
+`data` can start as `undefined` (for example while a request is in flight). TreeSelect renders nothing until it receives data.
 
 ## Expansion state
 

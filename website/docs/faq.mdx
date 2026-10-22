@@ -24,11 +24,25 @@ Yes. Import `@attebyte/react-tree-select/style.css` for the default styles, and 
 
 ## Does importing the stylesheet affect the rest of my app?
 
-No. Every class in it is prefixed with `rts:`, so it only matches the tree's own elements, and its rules are in the `components` cascade layer, so your own styles take priority. It has no global resets and doesn't declare theme variables that could override your own Tailwind theme. (Version 2.0.0 had a bug where its utility classes could override identically named classes in your app; upgrade to 2.0.1 or later.)
+No. Every class in it is prefixed with `rts:`, so it only matches the tree's own elements, and its rules are in the `components` cascade layer, so your own styles take priority. It has no global resets and doesn't declare theme variables that could override your own Tailwind theme. (Version 2.0.0 had a bug where its utility classes could override identically named classes in your app; upgrade to 2.1.0 or later.)
 
 ## Does it support server-side rendering?
 
 Yes. Both controlled and uncontrolled trees render on the server, including Next.js and other React frameworks. The tree is fully interactive once hydrated.
+
+## Why doesn't changing `defaultData` update the tree?
+
+`defaultData` is only the starting value, like `defaultValue` on an `<input>`: after the first render the tree keeps its own state, so the user's selections aren't wiped out when your component re-renders. To change the data from outside, either [control the tree](./controlled.mdx) with `data` and `onChange`, or give it a new `key` when new data arrives, which remounts it with the new `defaultData`:
+
+```tsx
+<TreeSelect key={dataVersion} defaultData={categories} {...props} />
+```
+
+`defaultExpanded` is the exception: changing it later expands or collapses every node.
+
+## Does the data have to be an array?
+
+No. If your tree has a single root node, pass the node itself to `data` or `defaultData`. `onChange` then reports a single node instead of an array, and `getSelectedIDs` accepts either shape.
 
 ## Which versions of React are supported?
 

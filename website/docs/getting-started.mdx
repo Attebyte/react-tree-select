@@ -83,6 +83,8 @@ const exampleData: ExampleNode[] = [
 Give every tree an accessible name with `aria-label` or `aria-labelledby`, as in the example above.
 :::
 
+If your tree has a single root node, you can pass the node itself instead of an array.
+
 ## Read the selection
 
 `defaultData` makes the tree **uncontrolled**: it keeps track of selections itself and calls `onChange` with the updated tree each time something is checked. To keep the selection in your own state, use `data` instead; see [Controlled usage](./controlled.mdx).

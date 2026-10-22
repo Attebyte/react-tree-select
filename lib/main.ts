@@ -12,7 +12,7 @@ export type { StandardComponentProps } from './components/TreeSelect';
 export type { ExpandIconProps } from './components/ExpandIcon';
 export type { NodeCheckProps } from './components/NodeCheck';
 export type { TreeNodeProps, TreeItemAttributes } from './components/TreeNode';
-export type { TreeSelectProps, NodeChangeOptions } from './components/TreeSelect';
+export type { TreeSelectProps, SingleRootTreeSelectProps, NodeChangeOptions } from './components/TreeSelect';
 
 export { getSelectedIDs, getSelectedNodes } from './utils/TreeUtility';
 export type { SelectionMode, SelectedIDsOptions, SelectedNodesOptions } from './utils/TreeUtility';

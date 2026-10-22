@@ -167,8 +167,9 @@ export interface SelectedIDsOptions<T> extends SelectedNodesOptions<T> {
   uniqueIDProperty: keyof T;
 }
 
-// Checked nodes (value === true) in display order. Mixed (null) nodes are not selected.
-export function getSelectedNodes<T>(data: T[], options: SelectedNodesOptions<T>): T[] {
+// Checked nodes (value === true) in display order. Mixed (null) nodes are not selected. Accepts an array of
+// root nodes or a single root node.
+export function getSelectedNodes<T>(data: T | T[], options: SelectedNodesOptions<T>): T[] {
   const { childrenProperty, valueProperty, mode = 'all' } = options;
   const selected: T[] = [];
 
@@ -185,12 +186,12 @@ export function getSelectedNodes<T>(data: T[], options: SelectedNodesOptions<T>)
       selected.push(node);
     visit(children);
   });
-  visit(data);
+  visit(Array.isArray(data) ? data : [data]);
 
   return selected;
 }
 
-export function getSelectedIDs<T>(data: T[], options: SelectedIDsOptions<T>): T[keyof T][] {
+export function getSelectedIDs<T>(data: T | T[], options: SelectedIDsOptions<T>): T[keyof T][] {
   return getSelectedNodes(data, options).map(node => node[options.uniqueIDProperty]);
 }
 

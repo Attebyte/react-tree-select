@@ -55,9 +55,25 @@ export interface TreeSelectProps<T> extends Omit<React.HTMLProps<HTMLDivElement>
   onChange?: (data: T[]) => void;
 }
 
+// The same props for a tree with a single root node: `data`, `defaultData` and `onChange` use the node itself
+export interface SingleRootTreeSelectProps<T> extends Omit<TreeSelectProps<T>, 'data' | 'defaultData' | 'onChange'> {
+  data?: T;
+  defaultData?: T;
+  onChange?: (data: T) => void;
+}
+
+// Overloads so `onChange` reports the same shape (array or single root) that was passed in
+export interface TreeSelectComponent {
+  <T>(props: TreeSelectProps<T>): React.JSX.Element;
+  <T>(props: SingleRootTreeSelectProps<T>): React.JSX.Element;
+}
+
 const EMPTY: never[] = [];
 
-export const TreeSelect = <T,>(props: TreeSelectProps<T>) => {
+const toArray = <T,>(value: T | T[] | undefined): T[] | undefined =>
+  value == null ? undefined : Array.isArray(value) ? value : [value];
+
+const TreeSelectImpl = <T,>(props: TreeSelectProps<T> | SingleRootTreeSelectProps<T>) => {
   const {
     data,
     defaultData,
@@ -90,8 +106,13 @@ export const TreeSelect = <T,>(props: TreeSelectProps<T>) => {
 
   // `data` makes the tree controlled: it renders exactly what it is given and only reports changes
   const isControlled = data != null;
-  const [internalData, setInternalData] = useState<T[] | undefined>(defaultData);
-  const tree: T[] = (isControlled ? data : internalData) ?? EMPTY;
+  const controlledData = useMemo(() => toArray<T>(data), [data]);
+  const [internalData, setInternalData] = useState(() => toArray<T>(defaultData));
+  const tree: T[] = (isControlled ? controlledData : internalData) ?? EMPTY;
+
+  // A single root node (rather than an array) is reported back to onChange in the same shape
+  const [defaultIsSingleRoot] = useState(() => defaultData != null && !Array.isArray(defaultData));
+  const isSingleRoot = isControlled ? !Array.isArray(data) : defaultIsSingleRoot;
 
   const keys = useMemo<TreeKeys<T>>(
     () => ({ uniqueIDProperty, childrenProperty, valueProperty, disabledProperty }),
@@ -107,9 +128,9 @@ export const TreeSelect = <T,>(props: TreeSelectProps<T>) => {
 
   // Read by the stable callbacks below so they never go stale; synced after commit so a discarded
   // concurrent render can't leave them pointing at data that never rendered
-  const latest = useRef({ tree, index, keys, isControlled, chainedSelect, onChange });
+  const latest = useRef({ tree, index, keys, isControlled, isSingleRoot, chainedSelect, onChange });
   useIsomorphicLayoutEffect(() => {
-    latest.current = { tree, index, keys, isControlled, chainedSelect, onChange };
+    latest.current = { tree, index, keys, isControlled, isSingleRoot, chainedSelect, onChange };
     if (pendingTree.current === tree)
       pendingTree.current = null;
   });
@@ -140,7 +161,7 @@ export const TreeSelect = <T,>(props: TreeSelectProps<T>) => {
   }, [store, tree, index, keys, defaultExpanded]);
 
   const handleNodeChange = useCallback((node: T, value: boolean | null, options?: NodeChangeOptions) => {
-    const { keys, isControlled, chainedSelect, onChange } = latest.current;
+    const { keys, isControlled, isSingleRoot, chainedSelect, onChange } = latest.current;
     if (keys.valueProperty === undefined)
       return;
 
@@ -167,7 +188,7 @@ export const TreeSelect = <T,>(props: TreeSelectProps<T>) => {
 
     if (!isControlled)
       setInternalData(nextTree);
-    onChange?.(nextTree);
+    (onChange as ((data: T | T[]) => void) | undefined)?.(isSingleRoot ? nextTree[0] : nextTree);
   }, []);
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
@@ -306,6 +327,8 @@ export const TreeSelect = <T,>(props: TreeSelectProps<T>) => {
     </div>
   );
 };
+
+export const TreeSelect = TreeSelectImpl as TreeSelectComponent;
 
 function hasCollapsedAncestor<K>(store: TreeStore<K>, id: K): boolean {
   let parentID = store.getParentID(id);

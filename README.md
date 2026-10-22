@@ -132,7 +132,7 @@ The most commonly used props. See the [API reference](https://rts.attebyte.io/do
 
 | Prop | Type | Description |
 | --- | --- | --- |
-| `data` / `defaultData` | `T[]` | The tree to render, controlled or uncontrolled. |
+| `data` / `defaultData` | `T[] | T` | The tree to render, controlled or uncontrolled: an array of root nodes, or a single root node. `onChange` reports it in the same shape. |
 | `uniqueIDProperty` | `keyof T` | **Required.** Property that uniquely identifies each node. |
 | `labelProperty` | `keyof T` | **Required.** Property holding the node's label. |
 | `childrenProperty` | `keyof T` | **Required.** Property holding the node's children. |
@@ -201,8 +201,9 @@ Version 2.0 contains breaking changes:
 - **Package exports are restricted.** The package now defines `exports`, so only the main entry point and the stylesheet can be imported. Import styles from `@attebyte/react-tree-select/style.css`. The old `@attebyte/react-tree-select/dist/style.css` path still works.
 - **The license changed from GPL-3.0 to MIT.**
 
-### 2.0.1
+### 2.1.0
 
+- `data` and `defaultData` accept a single root node as well as an array. `onChange` reports the tree in the same shape you passed in, so a controlled single-root tree works with `onChange={setRoot}`.
 - The stylesheet no longer affects elements outside the tree. In 2.0.0 its utility classes (such as `basis-full`) were unlayered and unprefixed, so they matched and overrode identically named classes in the consuming app, including Tailwind 4 responsive variants. Classes are now prefixed with `rts:` and live in the `components` cascade layer. If you worked around this by importing the stylesheet with `layer(components)`, you can keep or remove that.
 
 ### Fixes and improvements

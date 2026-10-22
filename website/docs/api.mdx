@@ -24,9 +24,9 @@ The tree component (default export). It renders a `div` with `role="tree"`, and 
 
 | Prop | Type | Default | Description |
 | --- | --- | --- | --- |
-| `data` | `T[]` | | The tree to render, for [controlled usage](./controlled.mdx). TreeSelect renders exactly this data. |
-| `defaultData` | `T[]` | | The initial tree, for uncontrolled usage. Ignored when `data` is provided. |
-| `onChange` | `(data: T[]) => void` | | Called with the updated tree whenever a node is checked or unchecked (only when something changed). Unchanged nodes are shared with the previous tree. |
+| `data` | `T[] | T` | | The tree to render, for [controlled usage](./controlled.mdx): an array of root nodes, or a single root node. TreeSelect renders exactly this data. |
+| `defaultData` | `T[] | T` | | The initial tree, for uncontrolled usage: an array of root nodes, or a single root node. Ignored when `data` is provided. |
+| `onChange` | `(data: T[]) => void` or `(data: T) => void` | | Called with the updated tree, in the same shape as `data` or `defaultData`, whenever a node is checked or unchecked (only when something changed). Unchanged nodes are shared with the previous tree. |
 | `uniqueIDProperty` | `keyof T` | **required** | Property that uniquely identifies each node. IDs must be unique across the whole tree. |
 | `labelProperty` | `keyof T` | **required** | Property that holds the node's label. Also used as the node's accessible name. |
 | `childrenProperty` | `keyof T` | **required** | Property that holds the node's children (an array). |
@@ -147,4 +147,4 @@ getSelectedNodes<T>(data: T[], options: SelectedNodesOptions<T>): T[]
 
 ## Exported types
 
-`TreeSelectProps`, `TreeNodeProps`, `NodeLabelProps`, `NodeCheckProps`, `ExpandIconProps`, `StandardComponentProps`, `TreeItemAttributes`, `NodeChangeOptions`, `SelectionMode`, `SelectedIDsOptions`, `SelectedNodesOptions`.
+`TreeSelectProps`, `SingleRootTreeSelectProps`, `TreeNodeProps`, `NodeLabelProps`, `NodeCheckProps`, `ExpandIconProps`, `StandardComponentProps`, `TreeItemAttributes`, `NodeChangeOptions`, `SelectionMode`, `SelectedIDsOptions`, `SelectedNodesOptions`.

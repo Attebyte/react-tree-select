@@ -22,8 +22,9 @@ Version 2.0 is a major release. Most apps only need to check the first two items
 - **Package exports are restricted.** Only the main entry point and the stylesheet can be imported. Import styles from `@attebyte/react-tree-select/style.css`; the old `dist/style.css` path still works.
 - **License changed from GPL-3.0 to MIT.**
 
-## 2.0.1
+## 2.1.0
 
+- `data` and `defaultData` accept a single root node as well as an array. `onChange` reports the tree in the same shape you passed in, so a controlled single-root tree works with `onChange={setRoot}`.
 - The stylesheet no longer affects elements outside the tree. In 2.0.0 its utility classes (such as `basis-full`) were unlayered and unprefixed, so they matched and overrode identically named classes in the consuming app, including Tailwind 4 responsive variants. Classes are now prefixed with `rts:` and live in the `components` cascade layer. See [Customization](./customization.mdx#how-the-default-styles-are-scoped).
 
 ## New features

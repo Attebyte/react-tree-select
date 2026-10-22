@@ -304,3 +304,10 @@ describe('getSelectedIDs', () => {
         expect(getSelectedIDs([structuredClone(TestTree)], options)).toEqual([]);
     });
 });
+
+describe('getSelectedIDs with a single root', () => {
+    test('accepts a single root node', () => {
+        const [root] = select([structuredClone(TestTree)], 2, true);
+        expect(getSelectedIDs(root, { uniqueIDProperty: 'id', childrenProperty: 'children', valueProperty: 'included', mode: 'leaves' })).toEqual([3, 4]);
+    });
+});

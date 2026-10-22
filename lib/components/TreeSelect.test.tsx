@@ -681,3 +681,74 @@ describe('stylesheet isolation', () => {
     expect(classes.filter(name => !name.startsWith('rts:'))).toEqual([]);
   });
 });
+
+describe('single root', () => {
+  const createRoot = (): Node => ({ label: 'Root', value: 1, children: [{ label: 'Left', value: 2 }, { label: 'Right', value: 3 }] });
+
+  test('an uncontrolled tree accepts a single root node and reports it back as a node', async () => {
+    const user = userEvent.setup();
+    const onChange = vi.fn();
+    render(
+      <TreeSelect
+        defaultData={createRoot()}
+        uniqueIDProperty='value'
+        labelProperty='label'
+        childrenProperty='children'
+        valueProperty='included'
+        defaultExpanded
+        onChange={onChange}
+      />
+    );
+
+    expect(screen.getAllByRole('treeitem').map(node => node.getAttribute('aria-label'))).toEqual(['Root', 'Left', 'Right']);
+    await user.click(checkbox('Left'));
+    const result: Node = onChange.mock.calls[0][0];
+    expect(Array.isArray(result)).toBe(false);
+    expect(result.included).toBe(null);
+    expect(result.children![0].included).toBe(true);
+    expect(item('Root').getAttribute('aria-checked')).toBe('mixed');
+  });
+
+  test('a controlled single root works with a node-typed state setter', async () => {
+    const user = userEvent.setup();
+    const Controlled = () => {
+      const [root, setRoot] = useState<Node>(createRoot);
+      return (
+        <TreeSelect
+          data={root}
+          onChange={setRoot}
+          uniqueIDProperty='value'
+          labelProperty='label'
+          childrenProperty='children'
+          valueProperty='included'
+          defaultExpanded
+        />
+      );
+    };
+    render(<Controlled />);
+
+    await user.click(checkbox('Root'));
+    expect(checkbox('Left').checked).toBe(true);
+    expect(checkbox('Right').checked).toBe(true);
+    await user.click(checkbox('Right'));
+    expect(item('Root').getAttribute('aria-checked')).toBe('mixed');
+  });
+
+  test('onChange is typed to match the shape of data', () => {
+    const arrayHandler = (data: Node[]) => data;
+    const nodeHandler = (data: Node) => data;
+    const props = { uniqueIDProperty: 'value', labelProperty: 'label', childrenProperty: 'children' } as const;
+
+    // Compile-time checks: each line is type checked by `npm run typecheck`
+    const valid = [
+      <TreeSelect key='1' data={createData()} onChange={arrayHandler} {...props} />,
+      <TreeSelect key='2' data={createRoot()} onChange={nodeHandler} {...props} />,
+      <TreeSelect<Node> key='3' defaultData={createData()} {...props} />,
+      // @ts-expect-error A single root node is reported as a node, not an array
+      <TreeSelect key='4' data={createRoot()} onChange={arrayHandler} {...props} />,
+      // @ts-expect-error An array is reported as an array, not a node
+      <TreeSelect key='5' data={createData()} onChange={nodeHandler} {...props} />
+    ];
+    expect(valid).toHaveLength(5);
+  });
+});
